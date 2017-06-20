@@ -4,6 +4,7 @@ import org.scalatra.{ScalatraBase, FutureSupport, ScalatraServlet}
 import slick.jdbc.H2Profile.api._
 import scala.concurrent.ExecutionContext.Implicits.global
 
+
 object Setup {
   val Account = TableQuery[Account]
   val create_table = DBIO.seq(
@@ -15,6 +16,7 @@ object Setup {
   )
   Database.forConfig("h2mem1").run(create_table)
 }
+
 //
 //val createSchemaAction = (Accounts.schema).create
 //val dropSchemaAction = (Accounts.schema).drop
