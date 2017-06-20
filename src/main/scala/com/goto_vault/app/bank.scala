@@ -3,9 +3,8 @@ package com.goto_vault.app
 import java.util.UUID
 import java.util.Calendar
 
-
 class Transaction(val from: UUID, val to: UUID, val amount: Double, val operation: Boolean) {
-  val datetime: = Calendar.getInstance()
+  val datetime = Calendar.getInstance()
 }
 
 class Account(var balance: Double = 0.0) {
@@ -15,7 +14,7 @@ class Account(var balance: Double = 0.0) {
   // Добавление денег на аккаунт
   def deposit(from: UUID, amount: Double) {
     // Добавить денег
-    val tmp_transaction: Transaction = new Transaction(from, this.uid, amount, 1)
+//    val tmp_transaction: Transaction = new Transaction(from, this.uid, amount, 1)
     balance += amount
   }
 
@@ -24,7 +23,7 @@ class Account(var balance: Double = 0.0) {
     if (amount > balance)
       false
     else {
-      val tmp_transaction: Transaction = new Transaction(this.uid.to, amount, 0)
+//      val tmp_transaction: Transaction = new Transaction(this.uid.to, amount, 0)
       balance -= amount
 
       true
