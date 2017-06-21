@@ -183,6 +183,7 @@ object Setup {
           s"""
              |<form method='post' action='/market/buy'>
              |<input type='hidden' name='id' value='${i._1}'>
+             |<input type='hidden' name='price' value='${i._3}'>
              |<input  value='Купить' type='submit'>
              |</form></li>""".stripMargin
 
