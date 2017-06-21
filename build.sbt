@@ -19,15 +19,16 @@ scalaVersion := "2.12.2"
 resolvers += Classpaths.typesafeReleases
 
 libraryDependencies ++= Seq(
-  "org.scalatra"            %% "scalatra"          % ScalatraVersion,
-  "org.scalatra"            %% "scalatra-scalate"  % ScalatraVersion,
-  "org.scalatra"            %% "scalatra-specs2"   % ScalatraVersion    % "test",
+  "org.scalatra" %% "scalatra" % ScalatraVersion,
+  "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
+  "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
   "ch.qos.logback" % "logback-classic" % "1.1.5" % "runtime",
-  "org.eclipse.jetty"       %  "jetty-webapp"      % "9.2.19.v20160908" % "provided",
-  "javax.servlet"           %  "javax.servlet-api" % "3.1.0"            % "provided",
-  "com.typesafe.slick"      %% "slick"             % "3.2.0",
-  "com.h2database"          %  "h2"                % "1.4.196",
-  "com.mchange"             %  "c3p0"              % "0.9.5.2"
+  "org.eclipse.jetty" % "jetty-webapp" % "9.2.19.v20160908" % "provided",
+  "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided",
+  "com.typesafe.slick" %% "slick" % "3.2.0",
+  "com.h2database" % "h2" % "1.4.196",
+  "com.mchange" % "c3p0" % "0.9.5.2",
+  "org.scalatra" %% "scalatra-auth" % "2.5.1"
 
 )
 
