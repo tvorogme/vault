@@ -85,7 +85,12 @@ object Setup {
   }
 
   def add_good(name: String, price: Double): Unit = {
-    val insertActions = DBIO.seq(Goods += (this.get_last_account() + 1, name, price))
+    val tmp = (this.get_last_good() + 1, name, price)
+    println(tmp)
+
+    val insertActions = DBIO.seq(Goods += tmp)
+
+    println(Goods)
     db.run(insertActions)
   }
 
@@ -155,7 +160,7 @@ object Setup {
   }
 
   def all_goods(): String = {
-    var q = Transactions.sortBy(_.id).result
+    val q = Goods.sortBy(_.id).result
 
     def res = Await.result(db.run(q), Duration.Inf)
 
