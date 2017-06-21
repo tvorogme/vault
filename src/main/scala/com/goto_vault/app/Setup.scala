@@ -22,15 +22,15 @@ object Setup {
   }
 
 
-  def get_last_account(): String = {
+  def get_last_account(): Int = {
     val query = Account.length.result
 
 
     def res = Await.result(db.run(query), Duration.Inf)
     // 3 HOURS for this sheat ^^^^^^^^^^^^^
 
-    
-    res.toString()
+
+    res
   }
 }
 
