@@ -106,6 +106,7 @@ create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,
 2017-06-21 16:36:18 jdbc[5]: exception
 org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
 create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+<<<<<<< HEAD
 2017-06-21 16:38:02 jdbc[6]: exception
 org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
 create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
@@ -196,3 +197,131 @@ create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NO
 2017-06-21 16:59:04 jdbc[5]: exception
 org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
 create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+=======
+2017-06-21 16:38:26 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:38:26 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:38:26 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:42:34 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:42:34 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:42:34 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:42:43 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:42:43 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:42:43 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:43:19 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:43:19 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:43:19 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:46:24 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:46:24 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:46:24 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:46:53 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:46:53 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:46:53 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:48:52 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:48:52 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:48:52 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:49:07 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:49:07 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:49:07 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:49:26 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:49:26 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:49:26 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:49:48 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:49:48 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:49:48 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:50:26 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:50:26 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:50:26 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:51:32 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:51:32 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:51:32 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:52:18 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:52:18 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:52:18 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:53:30 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:53:30 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:53:30 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
+>>>>>>> 8a9eea0dae192259be47042bf7e810be4f020d65
