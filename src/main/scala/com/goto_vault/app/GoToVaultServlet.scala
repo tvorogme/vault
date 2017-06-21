@@ -12,7 +12,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
   get("/") {
     contentType = "text/html"
-    ssp("/WEB-INF/templates/views/index.ssp", "pageTitle" -> "Welcome to Jade")
+    ssp("/WEB-INF/templates/views/index.ssp")
   }
 
   get("/profile") {
