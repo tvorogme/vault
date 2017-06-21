@@ -5,13 +5,12 @@ import java.util.Calendar
 
 import slick.jdbc.H2Profile.api._
 
-class Transaction(tag: Tag) extends Table[(Int, UUID, UUID, Double, Boolean)](tag, "Accounts") {
+class Transaction(tag: Tag) extends Table[(Int, Int, Int, Double)](tag, "Accounts") {
 
   def id = column[Int]("ID", O.PrimaryKey)
-  def from = column[UUID]("FROM")
-  def to = column[UUID]("TO")
+  def from = column[Int]("FROM")
+  def to = column[Int]("TO")
   def amount = column[Double]("AMOUNT")
-  def operation = column[Boolean]("OPERATION")
 
   def * = (id, from, to, amount, operation)
 }
