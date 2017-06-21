@@ -136,6 +136,8 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
     val tryLogin: Boolean = false
 
+    println(req.username, req.username.length, req.password, req.password.length)
+
     if (req.username.length > 0 && req.password.length > 0) {
       val tryLogin: Boolean = Setup.try_login(req.username, Setup.hash(req.password))
     }
