@@ -18,22 +18,14 @@ class GoToVaultServlet extends ZvezdochkaStack {
   get("/profile") {
     contentType = "text/html"
     val user: Option[Account] = basicAuth()
-    <html>
-      <head>
-        <link rel="stylesheet" type="text/css" href="compiled/styles.css"/>
-      </head>
-      <body>
-        {Setup.get_account(user.head.id)}
-      </body>
-    </html>
-
+    ssp("/WEB-INF/templates/views/profile.ssp", "user" -> Setup.get_account(user.head.id))
   }
   get("/admin") {
     contentType = "text/html"
     val user: Option[Account] = basicAuth()
 
     if (user.head.admin) {
-      Setup.all_accounts(mutable = true)+
+      Setup.all_accounts(mutable = true) +
         """
           |<form action='/admin/add_good' method='post'>
           |<input type='text' name='good_name'> <br> <br>
@@ -42,7 +34,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
           |</form>
           |""".stripMargin +
         Setup.all_goods()
-//        Setup.all_transactions()
+      //        Setup.all_transactions()
     } else {
       halt(404, "Not Found")
     }
@@ -80,14 +72,14 @@ class GoToVaultServlet extends ZvezdochkaStack {
     contentType = "text/html"
 
     <form action='/register' method='post'>
-      <input type='string' name='name'></input><br></br>
-      <input type='string' name='email'></input><br></br>
-      <input type='password' name='password'></input><br></br>
+      <input type='string' name='name'></input> <br></br>
+      <input type='string' name='email'></input> <br></br>
+      <input type='password' name='password'></input> <br></br>
       <input type='submit'></input>
     </form>
   }
   post("/register") {
-      Setup.add_account(params("name"), 0, params("password"), params("email"))
+    Setup.add_account(params("name"), 0, params("password"), params("email"))
   }
 
   get("/market") {
@@ -110,17 +102,17 @@ class GoToVaultServlet extends ZvezdochkaStack {
     if (user.isEmpty) {
       redirect("/profile")
     }
-    if(user.get.balance < params("price").toInt)
+    if (user.get.balance < params("price").toInt)
       redirect("/not_enough_money")
     else {
       Setup.buy_good(user.head.id, params("id").toInt)
       redirect("/thank_you")
     }
-    get("/thank_you"){
-      <p> Спасибо за покупку </p>
+    get("/thank_you") {
+      <p>Спасибо за покупку</p>
     }
-    get("/not_enough_money"){
-      <p> На Вашем счете недостаточно средств </p>
+    get("/not_enough_money") {
+      <p>На Вашем счете недостаточно средств</p>
     }
   }
 

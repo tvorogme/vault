@@ -100,7 +100,7 @@ object Setup {
     def balance = Await.result(db.run(query2), Duration.Inf).head._3
 
     //ToDo to bank
-    if (balance >= price){
+    if (balance >= price) {
       money_operation(acc_id, 1, price)
       db.run(query.delete)
     }
@@ -119,12 +119,14 @@ object Setup {
 
   def money_operation_with_db(acc_id: Int, amount: Double): Unit = {
     val query = Accounts.filter(_.id === acc_id).map(_.balance).result
+
     def res: Double = Await.result(db.run(query), Duration.Inf).head
+
     val q2 = Accounts.filter(_.id === acc_id).map(_.balance).update(res + amount)
     db.run(q2)
   }
 
-  def all_accounts(mutable:Boolean = false): String = {
+  def all_accounts(mutable: Boolean = false): String = {
     var q = Accounts.sortBy(_.id).result
 
     def res = Await.result(db.run(q), Duration.Inf)
@@ -148,13 +150,12 @@ object Setup {
     html
   }
 
-  def get_account(id: Int): String = {
+  def get_account(id: Int): (Int, String, Double, String, String, Boolean) = {
     var q = Accounts.filter(_.id === id).result
 
-    def res = Await.result(db.run(q), Duration.Inf).head
+    def res: (Int, String, Double, String, String, Boolean) = Await.result(db.run(q), Duration.Inf).head
 
-    var html: String = "<p>id: " + res._1 + "<br>  name: " + res._2 + "<br>   balance: " + res._3 + "<br>  mail: " + res._5 + "</p"
-    html
+    res
   }
 
   def all_transactions(): String = {
