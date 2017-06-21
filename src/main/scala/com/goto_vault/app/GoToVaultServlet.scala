@@ -15,8 +15,8 @@ class GoToVaultServlet extends ZvezdochkaStack {
     //    </html>
 
     val s = Setup
-    s.primary_setup()
-
+    s.primary_setup_account()
+    s.add_account("Tutu", 100500)
     <p>
       {s.get_last_account()}
     </p>

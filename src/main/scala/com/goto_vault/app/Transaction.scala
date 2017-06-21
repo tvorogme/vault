@@ -3,10 +3,18 @@ package com.goto_vault.app
 import java.util.UUID
 import java.util.Calendar
 
-class Transaction(val from: UUID, val to: UUID, val amount: Double, val operation: Boolean) {
-  val datetime = Calendar.getInstance()
-}
+import slick.jdbc.H2Profile.api._
 
+class Transaction(tag: Tag) extends Table[(Int, UUID, UUID, Double, Boolean)](tag, "Accounts") {
+
+  def id = column[Int]("ID", O.PrimaryKey)
+  def from = column[UUID]("FROM")
+  def to = column[UUID]("TO")
+  def amount = column[Double]("AMOUNT")
+  def operation = column[Boolean]("OPERATION")
+
+  def * = (id, from, to, amount, operation)
+}
 //class Account(var balance: Double = 0.0) {
 //  // Uid аккаунта
 //  val uid: UUID = java.util.UUID.randomUUID
