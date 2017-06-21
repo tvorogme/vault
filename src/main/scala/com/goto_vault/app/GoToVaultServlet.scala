@@ -52,6 +52,10 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
   }
   get("/register") {
+    val user: Option[Account] = basicAuth()
+
+    if(user.isDefined)
+      redirect("/profile")
     contentType = "text/html"
 
     <form action='/register' method='post'>
@@ -62,7 +66,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     </form>
   }
   post("/register") {
-      Setup.add_account(response("name"), 0, response("password"), response("email"))
+      Setup.add_account(params("name"), 0, params("password"), params("email"))
   }
 
   protected def basicAuth() = {
