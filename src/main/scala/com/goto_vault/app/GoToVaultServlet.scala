@@ -27,7 +27,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     if (user.head.admin) {
       Setup.all_accounts(mutable = true) +
         """
-          |<form action='/admin/add_good' method='post'>
+          |<form action='https://goto.msk.ru/vault/admin/add_good' method='post'>
           |<input type='text' name='good_name'> <br> <br>
           |<input type='text' name='good_price'> <br> <br>
           |<input type='submit'>
