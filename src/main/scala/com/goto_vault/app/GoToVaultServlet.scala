@@ -33,8 +33,8 @@ class GoToVaultServlet extends ZvezdochkaStack {
           |<input type='submit'>
           |</form>
           |""".stripMargin +
-        Setup.all_goods()
-      //        Setup.all_transactions()
+        Setup.all_goods() +
+              Setup.all_transactions()
     } else {
       halt(404, "Not Found")
     }
