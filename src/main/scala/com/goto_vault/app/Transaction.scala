@@ -11,6 +11,5 @@ class TransactionTable(tag: Tag) extends Table[(Int, Int, Int, Double)](tag, "Tr
   def from = column[Int]("FROM")
   def to = column[Int]("TO")
   def amount = column[Double]("AMOUNT")
-
   def * = (id, from, to, amount)
 }

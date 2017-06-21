@@ -2,7 +2,7 @@ package com.goto_vault.app
 
 import slick.jdbc.H2Profile.api._
 
-class AccountTable(tag: Tag) extends Table[(Int, String, Double, String, String)](tag, "Accounts") {
+class AccountTable(tag: Tag) extends Table[(Int, String, Double, String, String, Boolean)](tag, "Accounts") {
 
   def id = column[Int]("ID", O.PrimaryKey)
 
@@ -14,5 +14,7 @@ class AccountTable(tag: Tag) extends Table[(Int, String, Double, String, String)
 
   def email = column[String]("EMAIL")
 
-  def * = (id, name, balance, password, email)
+  def admin = column[Boolean]("ADMIN")
+
+  def * = (id, name, balance, password, email, admin)
 }

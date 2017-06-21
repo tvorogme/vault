@@ -22,11 +22,10 @@ object Setup {
   }
 
 
-
   def primary_setup_account(): Unit = {
     val create_table = DBIO.seq(
       Accounts.schema.create,
-      Accounts += (1, "Andrew Tvorozhkov", 0, hash("admin"), "admin")
+      Accounts += (1, "Andrew Tvorozhkov", 0, hash("admin"), "admin", true)
     )
     db.run(create_table)
   }
@@ -75,8 +74,8 @@ object Setup {
     res
   }
 
-  def add_account(name: String, balance: Double, pass: String, email: String): Unit = {
-    val insertActions = DBIO.seq(Accounts += (this.get_last_account() + 1, name, balance, hash(pass), email))
+  def add_account(name: String, balance: Double, pass: String, email: String, admin: Boolean = false): Unit = {
+    val insertActions = DBIO.seq(Accounts += (this.get_last_account() + 1, name, balance, hash(pass), email, admin))
     db.run(insertActions)
   }
 
@@ -100,7 +99,7 @@ object Setup {
     db.run(query.delete)
   }
 
-  def update_good_prize(id:Int, price:Double): Unit ={
+  def update_good_prize(id: Int, price: Double): Unit = {
     val query = Goods.filter(_.id === id).map(_.price).update(price)
     db.run(query)
   }
@@ -120,9 +119,11 @@ object Setup {
     db.run(q2)
   }
 
-  def all_accounts():String = {
+  def all_accounts(): String = {
     var q = Accounts.sortBy(_.id).result
+
     def res = Await.result(db.run(q), Duration.Inf)
+
     var html: String = "<ul>"
     for (i <- res) {
       html += "<li>id: " + i._1 + "  name: " + i._2 + "   balance: " + i._3 + "</li>"
@@ -131,27 +132,33 @@ object Setup {
     html
   }
 
-  def get_account(id:Int): Unit ={
+  def get_account(id: Int): String = {
     var q = Accounts.filter(_.id === id).result
+
     def res = Await.result(db.run(q), Duration.Inf).head
-    var html: String = "<p>id: " + res._1 + "  name: " + res._2 + "   balance: " + res._3 + "  mail: " + res._4 +"</p"
+
+    var html: String = "<p>id: " + res._1 + "<br>  name: " + res._2 + "<br>   balance: " + res._3 + "<br>  mail: " + res._5 + "</p"
     html
   }
 
-  def all_transactions():String = {
+  def all_transactions(): String = {
     var q = Transactions.sortBy(_.id).result
+
     def res = Await.result(db.run(q), Duration.Inf)
+
     var html: String = "<ul>"
     for (i <- res) {
-      html += "<li>id: " + i._1 + "  from: " + i._2 + "   to: " + i._3 + " amount: "+ i._4 + "</li>"
+      html += "<li>id: " + i._1 + "  from: " + i._2 + "   to: " + i._3 + " amount: " + i._4 + "</li>"
     }
     html += "</ul>"
     html
   }
 
-  def all_goods():String = {
+  def all_goods(): String = {
     var q = Transactions.sortBy(_.id).result
+
     def res = Await.result(db.run(q), Duration.Inf)
+
     var html: String = "<ul>"
     for (i <- res) {
       html += "<li>id: " + i._1 + "  name: " + i._2 + "   price: " + i._3 + "</li>"
@@ -164,23 +171,24 @@ object Setup {
     val query = Accounts.filter(_.email === email).map(_.password).result
 
     def res = Await.result(db.run(query), Duration.Inf)
+
     password == res.head.toString
   }
 
   def get_account_by_email(email: String): Account = {
     val query = Accounts.filter(_.email === email).result
 
-    def res: (Int, String, Double, String, String) = Await.result(db.run(query), Duration.Inf).head
+    def res: (Int, String, Double, String, String, Boolean) = Await.result(db.run(query), Duration.Inf).head
 
-    Account(res._1, res._2, res._3, res._4, res._5)
+    Account(res._1, res._2, res._3, res._4, res._5, res._6)
   }
 
 
   def get_account_by_id(id: Int): Account = {
     val query = Accounts.filter(_.id === id).result
 
-    def res: (Int, String, Double, String, String) = Await.result(db.run(query), Duration.Inf).head
+    def res: (Int, String, Double, String, String, Boolean) = Await.result(db.run(query), Duration.Inf).head
 
-    Account(res._1, res._2, res._3, res._4, res._5)
+    Account(res._1, res._2, res._3, res._4, res._5, res._6)
   }
 }
