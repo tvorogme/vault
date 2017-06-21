@@ -18,9 +18,6 @@ class GoToVaultServlet extends ZvezdochkaStack {
   }
   get("/admin") {
     contentType = "text/html"
-    Setup.add_good("Мороженое", 1000)
-    Setup.add_transaction(1, 1, 1000.0)
-    Setup.add_account("Lol", 0, "123123", "123123")
     val user: Option[Account] = basicAuth()
 
     if (user.head.admin) {
@@ -50,6 +47,31 @@ class GoToVaultServlet extends ZvezdochkaStack {
     } else {
       halt(404, "Not Found")
     }
+  }
+
+  get("/market") {
+    contentType = "text/html"
+
+    val user: Option[Account] = basicAuth()
+
+    if (user.isEmpty) {
+      redirect("/profile")
+    }
+
+    Setup.all_goods(true)
+  }
+
+  post("/market/buy") {
+    contentType = "text/html"
+
+    val user: Option[Account] = basicAuth()
+
+    if (user.isEmpty) {
+      redirect("/profile")
+    }
+
+    Setup.buy_good(user.head.id, params("id").toInt)
+    redirect("/profile")
   }
 
   protected def basicAuth() = {
