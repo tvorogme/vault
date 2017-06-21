@@ -10,11 +10,23 @@ class GoToVaultServlet extends ZvezdochkaStack {
   s.primary_setup_good()
   s.primary_setup_transaction()
 
+  get("/") {
+    contentType = "text/html"
+    ssp("/WEB-INF/templates/views/index.ssp", "pageTitle" -> "Welcome to Jade")
+  }
 
   get("/profile") {
     contentType = "text/html"
     val user: Option[Account] = basicAuth()
-    Setup.get_account(user.head.id)
+    <html>
+      <head>
+        <link rel="stylesheet" type="text/css" href="compiled/styles.css"/>
+      </head>
+      <body>
+        {Setup.get_account(user.head.id)}
+      </body>
+    </html>
+
   }
   get("/admin") {
     contentType = "text/html"
