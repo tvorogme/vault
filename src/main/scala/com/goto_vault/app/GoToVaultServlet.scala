@@ -73,10 +73,10 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
   }
   get("/register") {
-    val user: Option[Account] = basicAuth()
+    //val user: Option[Account] = basicAuth()
 
-    if(user.isDefined)
-      redirect("/profile")
+    //if(user.isDefined)
+    //  redirect("/profile")
     contentType = "text/html"
 
     <form action='/register' method='post'>
@@ -110,9 +110,18 @@ class GoToVaultServlet extends ZvezdochkaStack {
     if (user.isEmpty) {
       redirect("/profile")
     }
-
-    Setup.buy_good(user.head.id, params("id").toInt)
-    redirect("/profile")
+    if(user.get.balance < params("price").toInt)
+      redirect("/not_enough_money")
+    else {
+      Setup.buy_good(user.head.id, params("id").toInt)
+      redirect("/thank_you")
+    }
+    get("/thank_you"){
+      <p> Спасибо за покупку </p>
+    }
+    get("/not_enough_money"){
+      <p> На Вашем счете недостаточно средств </p>
+    }
   }
 
 
