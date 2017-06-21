@@ -3,9 +3,12 @@ package com.goto_vault.app
 import org.scalatra.{ScalatraBase, FutureSupport, ScalatraServlet}
 import slick.jdbc.H2Profile.api._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent._
+import scala.concurrent.duration.Duration
 
 
 object Setup {
+  var answer: Int = 0
   val db = Database.forConfig("h2mem1")
   val Account = TableQuery[Account]
 
@@ -20,10 +23,14 @@ object Setup {
 
 
   def get_last_account(): String = {
-    val result = db.run(DBIO.seq(Account.length.result))
+    val query = Account.length.result
 
-    println(result)
-    "LOL"
+
+    def res = Await.result(db.run(query), Duration.Inf)
+    // 3 HOURS for this sheat ^^^^^^^^^^^^^
+
+    
+    res.toString()
   }
 }
 
