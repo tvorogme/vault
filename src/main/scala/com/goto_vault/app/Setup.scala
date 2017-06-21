@@ -25,7 +25,7 @@ object Setup {
   def primary_setup_account(): Unit = {
     val create_table = DBIO.seq(
       Accounts.schema.create,
-      Accounts += (1, "Andrew Tvorozhkov", 0, hash("lolsecret"), "admin", true)
+      Accounts += (1, "Andrew Tvorozhkov", 0, hash("admin"), "admin", true)
     )
     db.run(create_table)
   }
