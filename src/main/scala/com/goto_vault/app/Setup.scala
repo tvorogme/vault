@@ -32,18 +32,14 @@ object Setup {
 
   def primary_setup_transaction(): Unit = {
     val create_table = DBIO.seq(
-      Transactions.schema.create,
-      Transactions += (1, 1, 2, 100),
-      Transactions += (2, 2, 1, 100)
+      Transactions.schema.create
     )
     db.run(create_table)
   }
 
   def primary_setup_good(): Unit = {
     val create_table = DBIO.seq(
-      Goods.schema.create,
-      Goods += (1, "ice cream", 60),
-      Goods += (2, "cookies", 50)
+      Goods.schema.create
     )
     db.run(create_table)
   }
@@ -159,14 +155,28 @@ object Setup {
     html
   }
 
-  def all_goods(): String = {
+  def all_goods(buy: Boolean = false): String = {
     val q = Goods.sortBy(_.id).result
 
     def res = Await.result(db.run(q), Duration.Inf)
 
     var html: String = "<ul>"
     for (i <- res) {
-      html += "<li>id: " + i._1 + "  name: " + i._2 + "   price: " + i._3 + "</li>"
+      if (buy) {
+
+        val buttonHtml: String =
+          s"""
+             |<form method='post' action='/market/buy'>
+             |<input type='hidden' name='id' value='${i._1}'>
+             |<input  value='Купить' type='submit'>
+             |</form></li>""".stripMargin
+
+
+        html += "<li> Name: " + i._2 + "   Price: " + i._3 + buttonHtml
+
+      } else {
+        html += "<li>id: " + i._1 + "  name: " + i._2 + "   price: " + i._3 + "</li>"
+      }
     }
     html += "</ul>"
     html
