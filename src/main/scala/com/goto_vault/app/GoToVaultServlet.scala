@@ -18,6 +18,10 @@ class GoToVaultServlet extends ZvezdochkaStack {
   get("/profile") {
     contentType = "text/html"
     val user: Option[Account] = basicAuth()
+
+    if (user.isEmpty)
+      redirect("https://goto.msk.ru/vault/admin/register")
+
     ssp("/WEB-INF/templates/views/profile.ssp", "user" -> Setup.get_account(user.head.id))
   }
   get("/admin") {
@@ -34,7 +38,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
           |</form>
           |""".stripMargin +
         Setup.all_goods() +
-              Setup.all_transactions()
+        Setup.all_transactions()
     } else {
       halt(404, "Not Found")
     }
@@ -85,11 +89,11 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
     ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods())
   }
-  get("/thank_you"){
-    <p> Спасибо за покупку</p>
+  get("/thank_you") {
+    <p>Спасибо за покупку</p>
   }
-  get("/not_enough_money"){
-    <p> На Вашем счете недостаточно средств </p>
+  get("/not_enough_money") {
+    <p>На Вашем счете недостаточно средств</p>
   }
   post("/market/buy") {
     contentType = "text/html"
@@ -99,7 +103,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     if (user.isEmpty) {
       redirect("https://goto.msk.ru/vault/profile")
     }
-    if(user.get.balance < params("price").toDouble)
+    if (user.get.balance < params("price").toDouble)
       redirect("https://goto.msk.ru/vault/not_enough_money")
     else {
       Setup.buy_good(user.head.id, params("id").toInt)
@@ -130,7 +134,12 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
     var user: Option[Account] = None
 
-    val tryLogin: Boolean = Setup.try_login(req.username, Setup.hash(req.password))
+    if (req.username.length > 0 && req.password.length > 0) {
+      val tryLogin: Boolean = Setup.try_login(req.username, Setup.hash(req.password))
+    } else{
+      // FIXME
+      val tryLogin: Boolean = Setup.try_login("qwdajndwjandijwasndjasnkjdanskjdnqw", Setup.hash("qwdajndwjandijwasndjasnkjdanskjdnqw"))
+    }
 
     if (tryLogin) {
       user = Option(Setup.get_account_by_email(req.username))
