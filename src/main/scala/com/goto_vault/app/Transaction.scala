@@ -12,7 +12,7 @@ class Transaction(tag: Tag) extends Table[(Int, Int, Int, Double)](tag, "Account
   def to = column[Int]("TO")
   def amount = column[Double]("AMOUNT")
 
-  def * = (id, from, to, amount, operation)
+  def * = (id, from, to, amount)
 }
 //class Account(var balance: Double = 0.0) {
 //  // Uid аккаунта

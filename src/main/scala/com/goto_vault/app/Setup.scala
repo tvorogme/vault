@@ -3,7 +3,6 @@ package com.goto_vault.app
 import org.scalatra.{FutureSupport, ScalatraBase, ScalatraServlet}
 import slick.jdbc.H2Profile.api._
 
-import com.goto_vault.app.Account
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import scala.concurrent.duration.Duration
@@ -82,6 +81,7 @@ object Setup {
     val q2 = Accounts.filter(_.id === acc_id).map(_.balance).update(res + amount)
     db.run(q2)
   }
+
   def try_login(email: String, password: String): Boolean = {
     val query = Accounts.filter(_.email === email).map(_.password).result
 
@@ -94,6 +94,15 @@ object Setup {
     val query = Accounts.filter(_.email === email).result
 
     def res: (Int, String, Double, String, String) = Await.result(db.run(query), Duration.Inf).head
+
+    Account(res._1, res._2, res._3, res._4, res._5)
+  }
+
+  def get_account_by_id(id: Int): Account = {
+    val query = Accounts.filter(_.id === id).result
+
+    def res: (Int, String, Double, String, String) = Await.result(db.run(query), Duration.Inf).head
+
     Account(res._1, res._2, res._3, res._4, res._5)
   }
 }
