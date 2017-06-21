@@ -106,3 +106,12 @@ create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,
 2017-06-21 16:36:18 jdbc[5]: exception
 org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
 create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:38:26 jdbc[6]: exception
+org.h2.jdbc.JdbcSQLException: Table "Goods" already exists; SQL statement:
+create table "Goods" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"PRICE" DOUBLE NOT NULL) [42101-196]
+2017-06-21 16:38:26 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-21 16:38:26 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Table "Transactions" already exists; SQL statement:
+create table "Transactions" ("ID" INTEGER NOT NULL PRIMARY KEY,"FROM" INTEGER NOT NULL,"TO" INTEGER NOT NULL,"AMOUNT" DOUBLE NOT NULL) [42101-196]
