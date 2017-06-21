@@ -93,7 +93,7 @@ crossorigin="anonymous"></script>
         <tbody><tr><td valign="center">
         <h1>Get New</h1>
         <h2>GoToWallet</h2><br></br>
-        <form action='/register' method='post'>
+        <form action='https://goto.msk.ru/vault/register' method='post'>
             <input id="name" placeholder="Username" type='text' name='name'></input> <br></br>
             <input id="email" placeholder="Email" type='text' name='email'></input> <br></br>
             <input id="password" placeholder="Password" type='password' name='password'></input> <br></br>
