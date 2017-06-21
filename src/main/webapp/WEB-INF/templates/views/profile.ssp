@@ -34,6 +34,7 @@ crossorigin="anonymous"></script>
     <style>
         body, html{
         font-family: "Ubuntu Mono derivative Powerline";
+        overflow: hidden;
         }
 
         svg{

@@ -33,6 +33,7 @@ crossorigin="anonymous"></script>
     <style>
         body, html{
         font-family: "Ubuntu Mono derivative Powerline";
+        overflow: hidden;
         }
 
         svg{
@@ -91,7 +92,7 @@ crossorigin="anonymous"></script>
     <table>
         <tbody><tr><td valign="center">
         <h1>Get New</h1>
-        <h2>GoToWallet</h2>
+        <h2>GoToWallet</h2><br></br>
         <form action='/register' method='post'>
             <input id="name" placeholder="Username" type='text' name='name'></input> <br></br>
             <input id="email" placeholder="Email" type='text' name='email'></input> <br></br>
