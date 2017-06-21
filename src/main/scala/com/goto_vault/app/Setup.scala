@@ -6,15 +6,25 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 
 object Setup {
+  val db = Database.forConfig("h2mem1")
   val Account = TableQuery[Account]
-  val create_table = DBIO.seq(
+
+  def primary_setup(): Unit = {
+    val create_table = DBIO.seq(
+      (Account.schema).create,
+      Account += (1, "Andrew Tvorozhkov", 0),
+      Account += (2, "Grisha Belogorov", 0)
+    )
+    db.run(create_table)
+  }
 
 
-    (Account.schema).create,
-    Account += (1, "Andrew Tvorozhkov", 0),
-    Account += (2, "Grisha Belogorov", 0)
-  )
-  Database.forConfig("h2mem1").run(create_table)
+  def get_last_account(): String = {
+    val result = db.run(DBIO.seq(Account.length.result))
+
+    println(result)
+    "LOL"
+  }
 }
 
 //
