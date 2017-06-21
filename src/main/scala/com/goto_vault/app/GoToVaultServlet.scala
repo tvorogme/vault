@@ -65,18 +65,16 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
   }
   get("/register") {
-    val user: Option[Account] = basicAuth()
 
-    if(user.isDefined)
-      redirect("/profile")
     contentType = "text/html"
+    //val user: Option[Account] = basicAuth()
 
-    <form action='/register' method='post'>
-      <input type='string' name='name'></input> <br></br>
-      <input type='string' name='email'></input> <br></br>
-      <input type='password' name='password'></input> <br></br>
-      <input type='submit'></input>
-    </form>
+    //if(user.isDefined)
+    //  redirect("/profile")
+
+
+    ssp("/WEB-INF/templates/views/register.ssp")
+
   }
   post("/register") {
     Setup.add_account(params("name"), 0, params("password"), params("email"))

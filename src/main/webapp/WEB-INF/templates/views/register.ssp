@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Большая не нужная библиотека -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<!--Шрифты-->
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400" rel="stylesheet">
+
+<!--Reset all browsers-->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
+
+<!--Красивые значки-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--UI for navigation-->
+<script
+    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+crossorigin="anonymous"></script>
+
+
+<!--Бутстрап-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+crossorigin="anonymous"></script>
+
+<meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body, html{
+        font-family: "Ubuntu Mono derivative Powerline";
+        }
+
+        svg{
+        display: block;
+        margin: 0 auto;
+        height: 300px;
+        width: 500px;
+        }
+
+        h1{
+        font-size: 120px;
+        text-align: center;
+        margin: 0;
+        letter-spacing: 13px;
+        color: #080808;
+        }
+
+        h2{
+        font-size: 105px;
+        text-align: center;
+        margin: 0;
+        letter-spacing: 13px;
+        color: #080808;
+        }
+
+        p{
+        font-size: 90px;
+        }
+        table{    width: 100vw;
+        height: 100vh;}
+        a{    font-size: 79px;
+        cursor: pointer;}
+
+        p{
+        text-align: center;
+        }
+
+        input[type='text'],
+        input[type='password']{
+        display: block;
+        font-size: 70px;
+        margin: 0 auto;
+        border: none;
+        }
+
+        input[type='submit']{
+        background: none;
+        border: none;
+        font-size: 70px;
+        display: block;
+        margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tbody><tr><td valign="center">
+        <h1>Get New</h1>
+        <h2>GoToWallet</h2>
+        <form action='/register' method='post'>
+            <input id="name" placeholder="Username" type='text' name='name'></input> <br></br>
+            <input id="email" placeholder="Email" type='text' name='email'></input> <br></br>
+            <input id="password" placeholder="Password" type='password' name='password'></input> <br></br>
+            <input type='submit'></input>
+        </form>
+        </td></tr></tbody>
+
+    </table>
+</body>
+</html>
