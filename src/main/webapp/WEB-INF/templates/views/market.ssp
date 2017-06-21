@@ -81,7 +81,7 @@ crossorigin="anonymous"></script>
         <h1>VAULT MARKET</h1>
         <ul>
             #for (i <- items)
-                <li><form id='product_${i._1}' method='post' action='/market/buy'>${i._2} ${i._3}ĜŦ  <input type='hidden' name='id' value='${i._1}'> <input type='hidden' name='price' value='${i._3}'> <i onclick="$('#product_${i._1}').submit()" class="fa fa-plus" aria-hidden="true"></i> </form></li>
+                <li><form id='product_${i._1}' method='post' action='https://goto.msk.ru/vault/market/buy'>${i._2} ${i._3}ĜŦ  <input type='hidden' name='id' value='${i._1}'> <input type='hidden' name='price' value='${i._3}'> <i onclick="$('#product_${i._1}').submit()" class="fa fa-plus" aria-hidden="true"></i> </form></li>
             #end
         </ul>
         <p><a href="https://goto.msk.ru/vault/profile">wallet</a></p>
