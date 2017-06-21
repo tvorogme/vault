@@ -7,10 +7,11 @@ import com.goto_vault.app.Account
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import scala.concurrent.duration.Duration
+
 object Setup {
 
   val db = Database.forConfig("h2mem1")
-  val Accounts = TableQuery[Account]
+  val Accounts = TableQuery[AccountTable]
   val Transaction = TableQuery[Transaction]
 
   def hash(s: String): String = {
@@ -40,7 +41,6 @@ object Setup {
   }
 
 
-
   def get_last_account(): Int = {
     val query = Accounts.length.result
     println(query)
@@ -62,31 +62,38 @@ object Setup {
     val insertActions = DBIO.seq(Accounts += (this.get_last_account() + 1, name, balance, hash(pass), email))
     db.run(insertActions)
   }
-  def add_transaction(from:Int, to:Int, amount:Double): Unit ={
-    val insertActions = DBIO.seq(Transaction += (this.get_last_transaction()+1, from, to, amount))
+
+  def add_transaction(from: Int, to: Int, amount: Double): Unit = {
+    val insertActions = DBIO.seq(Transaction += (this.get_last_transaction() + 1, from, to, amount))
     db.run(insertActions)
   }
 
-  def money_operation(from:Int, to:Int, amount:Double): Unit ={
+  def money_operation(from: Int, to: Int, amount: Double): Unit = {
     money_operation_with_db(from, amount)
     money_operation_with_db(to, -amount)
     add_transaction(from, to, amount)
   }
 
-  def money_operation_with_db(acc_id:Int, amount:Double): Unit ={
+  def money_operation_with_db(acc_id: Int, amount: Double): Unit = {
     val query = Accounts.filter(_.id === acc_id).map(_.balance).result
-    def res:Double = Await.result(db.run(query), Duration.Inf).head
-    val q2 = Accounts.filter(_.id === acc_id).map(_.balance).update(res+amount)
-    db.run(q2)
 
+    def res: Double = Await.result(db.run(query), Duration.Inf).head
+
+    val q2 = Accounts.filter(_.id === acc_id).map(_.balance).update(res + amount)
+    db.run(q2)
+  }
   def try_login(email: String, password: String): Boolean = {
     val query = Accounts.filter(_.email === email).map(_.password).result
+
     def res: String = Await.result(db.run(query), Duration.Inf).toString()
+
     hash(password) == res
   }
 
-  def get_account_by_email(email: String): Account ={
+  def get_account_by_email(email: String): Account = {
     val query = Accounts.filter(_.email === email).result
-    def res: Account = Account <- Await.result(db.run(query), Duration.Inf).head
+
+    def res: (Int, String, Double, String, String) = Await.result(db.run(query), Duration.Inf).head
+    Account(res._1, res._2, res._3, res._4, res._5)
   }
 }
