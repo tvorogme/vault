@@ -24,6 +24,19 @@ class GoToVaultServlet extends ZvezdochkaStack {
       halt(404, "Not Found")
     }
   }
+  get("/register") {
+    contentType = "text/html"
+
+    <form action='/register' method='post'>
+      <input type='string' name='name'></input><br></br>
+      <input type='string' name='email'></input><br></br>
+      <input type='password' name='password'></input><br></br>
+      <input type='submit'></input>
+    </form>
+  }
+  post("/register") {
+      Setup.add_account(response("name"), 0, response("password"), response("email"))
+  }
 
   protected def basicAuth() = {
     val req = new BasicAuthRequest(request)
