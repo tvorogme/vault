@@ -1,24 +1,16 @@
 package com.goto_vault.app
 
 import org.scalatra._
-//import com.goto_vault.app.Setup
 
 
 class GoToVaultServlet extends ZvezdochkaStack {
+  val s = Setup
+  s.primary_setup_account()
 
   get("/") {
-    //    <html>
-    //      <body>
-    //        <h1>Hello, world!</h1>
-    //        Say <a href="hello-scalate">hello to Scalate</a>.
-    //      </body>
-    //    </html>
-
-    val s = Setup
-    s.primary_setup_account()
-    s.add_account("Tutu", 100500)
+    s.try_login("aaa@a.ru", "1234")
     <p>
-      {s.get_last_account()}
+      lol
     </p>
   }
 
