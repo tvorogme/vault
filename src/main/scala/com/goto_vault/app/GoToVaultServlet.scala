@@ -134,13 +134,11 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
     var user: Option[Account] = None
 
+    val tryLogin: Boolean = false
+    
     if (req.username.length > 0 && req.password.length > 0) {
       val tryLogin: Boolean = Setup.try_login(req.username, Setup.hash(req.password))
-    } else{
-      // FIXME
-      val tryLogin: Boolean = Setup.try_login("qwdajndwjandijwasndjasnkjdanskjdnqw", Setup.hash("qwdajndwjandijwasndjasnkjdanskjdnqw"))
     }
-
     if (tryLogin) {
       user = Option(Setup.get_account_by_email(req.username))
       response.setHeader("REMOTE_USER", "user.id")
