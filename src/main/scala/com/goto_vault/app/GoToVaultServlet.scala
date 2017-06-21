@@ -135,7 +135,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     var user: Option[Account] = None
 
     var tryLogin: Boolean = false
-    
+
     if (req.username.length > 0 && req.password.length > 0) {
       tryLogin = Setup.try_login(req.username, Setup.hash(req.password))
     }
