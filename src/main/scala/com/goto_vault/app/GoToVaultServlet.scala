@@ -21,7 +21,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     val user: Option[Account] = basicAuth()
 
     if (user.head.admin) {
-      Setup.all_accounts() +
+      Setup.all_accounts(mutable = true)+
         """
           |<form action='/admin/add_good' method='post'>
           |<input type='text' name='good_name'> <br> <br>
@@ -29,8 +29,8 @@ class GoToVaultServlet extends ZvezdochkaStack {
           |<input type='submit'>
           |</form>
           |""".stripMargin +
-        Setup.all_goods() +
-        Setup.all_transactions()
+        Setup.all_goods()
+//        Setup.all_transactions()
     } else {
       halt(404, "Not Found")
     }
@@ -43,6 +43,18 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
     if (user.head.admin) {
       Setup.add_good(params("good_name"), params("good_price").toInt)
+      redirect("/admin")
+    } else {
+      halt(404, "Not Found")
+    }
+  }
+  post("/admin/add_money") {
+    contentType = "text/html"
+
+    val user: Option[Account] = basicAuth()
+
+    if (user.head.admin) {
+      Setup.money_operation_with_db(params("id").toInt, params("amount").toInt)
       redirect("/admin")
     } else {
       halt(404, "Not Found")
@@ -90,6 +102,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     Setup.buy_good(user.head.id, params("id").toInt)
     redirect("/profile")
   }
+
 
   protected def basicAuth() = {
     val req = new BasicAuthRequest(request)

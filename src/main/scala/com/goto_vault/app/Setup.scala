@@ -95,9 +95,15 @@ object Setup {
 
     def price: Double = Await.result(db.run(query.map(_.price).result), Duration.Inf).head
 
+    var query2 = Accounts.filter(_.id === acc_id).result
+
+    def balance = Await.result(db.run(query2), Duration.Inf).head._3
+
     //ToDo to bank
-    money_operation(acc_id, 1, price)
-    db.run(query.delete)
+    if (balance >= price){
+      money_operation(acc_id, 1, price)
+      db.run(query.delete)
+    }
   }
 
   def update_good_prize(id: Int, price: Double): Unit = {
@@ -113,21 +119,30 @@ object Setup {
 
   def money_operation_with_db(acc_id: Int, amount: Double): Unit = {
     val query = Accounts.filter(_.id === acc_id).map(_.balance).result
-
     def res: Double = Await.result(db.run(query), Duration.Inf).head
-
     val q2 = Accounts.filter(_.id === acc_id).map(_.balance).update(res + amount)
     db.run(q2)
   }
 
-  def all_accounts(): String = {
+  def all_accounts(mutable:Boolean = false): String = {
     var q = Accounts.sortBy(_.id).result
 
     def res = Await.result(db.run(q), Duration.Inf)
 
     var html: String = "<ul>"
     for (i <- res) {
-      html += "<li>id: " + i._1 + "  name: " + i._2 + "   balance: " + i._3 + "</li>"
+      if (mutable) {
+        val buttonHtml: String =
+          s"""
+             |<form method='post' action='/admin/add_money'>
+             |<input type='hidden' name='id' value='${i._1}'>
+             |<input type='string' name='amount'>
+             |<input value='Применить' type='submit'>
+             |</form></li>""".stripMargin
+        html += "<li>id: " + i._1 + "  name: " + i._2 + "   balance: " + i._3 + buttonHtml
+      }
+      else
+        html += "<li>id: " + i._1 + "  name: " + i._2 + "   balance: " + i._3 + "</li>"
     }
     html += "</ul>"
     html
