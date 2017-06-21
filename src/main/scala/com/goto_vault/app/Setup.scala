@@ -171,6 +171,14 @@ object Setup {
     html
   }
 
+  def all_cool_goods(): Seq[(Int, String, Double)] = {
+    val q = Goods.sortBy(_.id).result
+
+    def res = Await.result(db.run(q), Duration.Inf)
+
+    res
+  }
+
   def all_goods(buy: Boolean = false): String = {
     val q = Goods.sortBy(_.id).result
 

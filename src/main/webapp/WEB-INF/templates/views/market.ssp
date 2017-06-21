@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ var user:  (Int, String, Double, String, String, Boolean) %>
+<%@ var items:  Seq[(Int, String, Double)] %>
 <html lang="en">
 <head>
 <!-- Большая не нужная библиотека -->
@@ -63,15 +63,27 @@ crossorigin="anonymous"></script>
         p{
         text-align: center;
         }
+
+        li{
+        font-size: 80px;
+        text-align: center;
+        }
+
+        i:hover{
+        cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <table>
         <tbody><tr><td valign="center">
-        <h1>VAULT</h1>
-        <p>VaultId: ${user._1}</p>
-        <p>GoToCoins: ${user._3}ĜŦ</p>
-        <p><a href="./market">market</a></p>
+        <h1>VAULT MARKET</h1>
+        <ul>
+            #for (i <- items)
+                <li><form id='product_${i._1}' method='post' action='/market/buy'>${i._2} ${i._3}ĜŦ  <input type='hidden' name='id' value='${i._1}'> <input type='hidden' name='price' value='${i._3}'> <i onclick="$('#product_${i._1}').submit()" class="fa fa-plus" aria-hidden="true"></i> </form></li>
+            #end
+        </ul>
+        <p><a href="./profile">wallet</a></p>
         </td></tr></tbody>
 
     </table>

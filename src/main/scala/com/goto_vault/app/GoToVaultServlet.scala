@@ -65,19 +65,13 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
   }
   get("/register") {
-
     contentType = "text/html"
-    //val user: Option[Account] = basicAuth()
-
-    //if(user.isDefined)
-    //  redirect("/profile")
-
 
     ssp("/WEB-INF/templates/views/register.ssp")
 
   }
   post("/register") {
-    Setup.add_account(params("name"), 0, params("password"), params("email"))
+    Setup.add_account(params("name"), 15, params("password"), params("email"))
     redirect("/profile")
   }
 
@@ -89,8 +83,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     if (user.isEmpty) {
       redirect("/profile")
     }
-
-    Setup.all_goods(true)
+    ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods())
   }
   get("/thank_you"){
     <p> Спасибо за покупку</p>
