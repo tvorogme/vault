@@ -72,6 +72,7 @@ object Setup {
     money_operation_with_db(to, -amount)
     add_transaction(from, to, amount)
   }
+
   def money_operation_with_db(acc_id:Int, amount:Double): Unit ={
     val query = Accounts.filter(_.id === acc_id).map(_.balance).result
     def res:Double = Await.result(db.run(query), Duration.Inf).head
