@@ -92,6 +92,11 @@ object Setup {
     db.run(query.delete)
   }
 
+  def update_good_prize(id:Int, price:Double): Unit ={
+    val query = Goods.filter(_.id === id).map(_.price).update(price)
+    db.run(query)
+  }
+
   def money_operation(from: Int, to: Int, amount: Double): Unit = {
     money_operation_with_db(from, -amount)
     money_operation_with_db(to, amount)
@@ -103,6 +108,46 @@ object Setup {
     def res: Double = Await.result(db.run(query), Duration.Inf).head
     val q2 = Accounts.filter(_.id === acc_id).map(_.balance).update(res + amount)
     db.run(q2)
+  }
+
+  def all_accounts():String = {
+    var q = Accounts.sortBy(_.id).result
+    def res = Await.result(db.run(q), Duration.Inf)
+    var html: String = "<ul>"
+    for (i <- res) {
+      html += "<li>id: " + i._1 + "  name: " + i._2 + "   balance: " + i._3 + "</li>"
+    }
+    html += "</ul>"
+    html
+  }
+
+  def get_account(id:Int): Unit ={
+    var q = Accounts.filter(_.id === id).result
+    def res = Await.result(db.run(q), Duration.Inf).head
+    var html: String = "<p>id: " + res._1 + "  name: " + res._2 + "   balance: " + res._3 + "  mail: " + res._4 +"</p"
+    html
+  }
+
+  def all_transactions():String = {
+    var q = Transactions.sortBy(_.id).result
+    def res = Await.result(db.run(q), Duration.Inf)
+    var html: String = "<ul>"
+    for (i <- res) {
+      html += "<li>id: " + i._1 + "  from: " + i._2 + "   to: " + i._3 + " amount: "+ i._4 + "</li>"
+    }
+    html += "</ul>"
+    html
+  }
+
+  def all_goods():String = {
+    var q = Transactions.sortBy(_.id).result
+    def res = Await.result(db.run(q), Duration.Inf)
+    var html: String = "<ul>"
+    for (i <- res) {
+      html += "<li>id: " + i._1 + "  name: " + i._2 + "   price: " + i._3 + "</li>"
+    }
+    html += "</ul>"
+    html
   }
 
   def try_login(email: String, password: String): Boolean = {
@@ -117,6 +162,7 @@ object Setup {
 
     Account(res._1, res._2, res._3, res._4, res._5)
   }
+
 
   def get_account_by_id(id: Int): Account = {
     val query = Accounts.filter(_.id === id).result

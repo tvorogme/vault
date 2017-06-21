@@ -9,9 +9,9 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
   get("/") {
     s.try_login("aaa@a.ru", "1234")
-    <p>
-      lol
-    </p>
+    <ul><li>id: 1  name: Andrew Tvorozhkov   balance: 0.0</li><li>id: 2  name: Grisha Belogorov   balance: 0.0</li></ul>
   }
-
+  get("/stats"){
+    {Setup.all_accounts()}
+  }
 }
