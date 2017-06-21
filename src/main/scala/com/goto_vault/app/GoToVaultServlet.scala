@@ -78,6 +78,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
   }
   post("/register") {
     Setup.add_account(params("name"), 0, params("password"), params("email"))
+    redirect("/profile")
   }
 
   get("/market") {
