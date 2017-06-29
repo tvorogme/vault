@@ -133,12 +133,16 @@ class GoToVaultServlet extends ZvezdochkaStack {
     if (!req.providesAuth) {
       notAuthenticated()
     }
+    if (!req.isBasicAuth) {
+      halt(400, "Bad Request")
+    }
 
     var login: Boolean = false
 
     if (req.username.length > 0 && req.password.length > 0) {
       login = Setup.try_login(req.username, Setup.hash(req.password))
     }
+
     if (login) {
       user = Option(Setup.get_account_by_email(req.username))
       response.setHeader("REMOTE_USER", "user.id")
@@ -146,7 +150,6 @@ class GoToVaultServlet extends ZvezdochkaStack {
     else {
       notAuthenticated()
     }
-    
     user
   }
 }
