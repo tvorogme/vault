@@ -71,6 +71,11 @@ class GoToVaultServlet extends ZvezdochkaStack {
   get("/register") {
     contentType = "text/html"
 
+    val user: Option[Account] = basicAuth()
+
+    if (user.isDefined)
+      return redirect("https://goto.msk.ru/vault/profile")
+    
     ssp("/WEB-INF/templates/views/register.ssp")
 
   }
@@ -112,7 +117,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
   }
 
 
-  protected def basicAuth() = {
+  protected def basicAuth(auth_halt = true): Option[Account] = {
     val req = new BasicAuthRequest(request)
 
     def notAuthenticated() {
@@ -139,7 +144,8 @@ class GoToVaultServlet extends ZvezdochkaStack {
       response.setHeader("REMOTE_USER", "user.id")
     }
     else {
-      notAuthenticated()
+      if (auth_halt)
+        notAuthenticated()
     }
 
     user
