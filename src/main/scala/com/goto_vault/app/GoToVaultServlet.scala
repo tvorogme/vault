@@ -71,7 +71,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
   get("/register") {
     contentType = "text/html"
 
-    val user: Option[Account] = basicAuth()
+    val user: Option[Account] = basicAuth(false)
 
     if (user.isDefined)
       redirect("https://goto.msk.ru/vault/profile")
@@ -123,9 +123,12 @@ class GoToVaultServlet extends ZvezdochkaStack {
     val req = new BasicAuthRequest(request)
 
     def notAuthenticated() {
-//      response.setHeader("WWW-Authenticate", "Basic realm=\"%s\"" format "mc-nulty")
-      redirect("/lol")
-//      halt(401, "Unauthenticated")
+      if (try_login) {
+        response.setHeader("WWW-Authenticate", "Basic realm=\"%s\"" format "mc-nulty")
+        halt(401, "Unauthenticated")
+      } else {
+        None
+      }
     }
 
     if (!req.providesAuth) {
