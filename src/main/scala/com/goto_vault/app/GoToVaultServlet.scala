@@ -4,11 +4,9 @@ import org.scalatra._
 import org.scalatra.auth.strategy.BasicAuthStrategy.BasicAuthRequest
 
 class GoToVaultServlet extends ZvezdochkaStack {
-
-  val s = Setup
-  s.primary_setup_account()
-  s.primary_setup_good()
-  s.primary_setup_transaction()
+  Setup.primary_setup_account()
+  Setup.primary_setup_good()
+  Setup.primary_setup_transaction()
 
   get("/") {
     contentType = "text/html"
@@ -24,6 +22,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
     ssp("/WEB-INF/templates/views/profile.ssp", "user" -> Setup.get_account(user.head.id))
   }
+
   get("/admin") {
     contentType = "text/html"
     val user: Option[Account] = basicAuth()
@@ -68,6 +67,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
       halt(404, "Not Found")
     }
   }
+
   get("/register") {
     contentType = "text/html"
 
@@ -79,7 +79,6 @@ class GoToVaultServlet extends ZvezdochkaStack {
     ssp("/WEB-INF/templates/views/register.ssp")
 
   }
-
   post("/register") {
     Setup.add_account(params("name"), 15, params("password"), params("email"))
     redirect("https://goto.msk.ru/vault/profile")
@@ -95,12 +94,15 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
     ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods())
   }
+
+  //FIXME add redirect
   get("/thank_you") {
     <p>Спасибо за покупку</p>
   }
   get("/not_enough_money") {
     <p>На Вашем счете недостаточно средств</p>
   }
+
   post("/market/buy") {
     contentType = "text/html"
 
@@ -117,13 +119,13 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
   }
 
-
-  protected def basicAuth(auth_halt: Boolean = true): Option[Account] = {
+  protected def basicAuth(try_login: Boolean = true): Option[Account] = {
     val req = new BasicAuthRequest(request)
 
     def notAuthenticated() {
-      response.setHeader("WWW-Authenticate", "Basic realm=\"%s\"" format "mc-nulty")
-      halt(401, "Unauthenticated")
+//      response.setHeader("WWW-Authenticate", "Basic realm=\"%s\"" format "mc-nulty")
+      redirect("/lol")
+//      halt(401, "Unauthenticated")
     }
 
     if (!req.providesAuth) {
@@ -134,19 +136,18 @@ class GoToVaultServlet extends ZvezdochkaStack {
     }
     var user: Option[Account] = None
 
-    var tryLogin: Boolean = false
+    var login: Boolean = false
 
     if (req.username.length > 0 && req.password.length > 0) {
-      tryLogin = Setup.try_login(req.username, Setup.hash(req.password))
+      login = Setup.try_login(req.username, Setup.hash(req.password))
     }
 
-    if (tryLogin) {
+    if (login) {
       user = Option(Setup.get_account_by_email(req.username))
       response.setHeader("REMOTE_USER", "user.id")
     }
     else {
-      if (auth_halt)
-        notAuthenticated()
+      notAuthenticated()
     }
 
     user
