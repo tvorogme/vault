@@ -74,11 +74,12 @@ class GoToVaultServlet extends ZvezdochkaStack {
     val user: Option[Account] = basicAuth()
 
     if (user.isDefined)
-      return redirect("https://goto.msk.ru/vault/profile")
-    
+      redirect("https://goto.msk.ru/vault/profile")
+
     ssp("/WEB-INF/templates/views/register.ssp")
 
   }
+
   post("/register") {
     Setup.add_account(params("name"), 15, params("password"), params("email"))
     redirect("https://goto.msk.ru/vault/profile")
@@ -117,7 +118,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
   }
 
 
-  protected def basicAuth(auth_halt = true): Option[Account] = {
+  protected def basicAuth(auth_halt: Boolean = true): Option[Account] = {
     val req = new BasicAuthRequest(request)
 
     def notAuthenticated() {
