@@ -25,7 +25,7 @@ object Setup {
   def primary_setup_account(): Unit = {
     val create_table = DBIO.seq(
       Accounts.schema.create,
-      Accounts += (1, "Andrew Tvorozhkov", 0, hash("lolololo"), "admin", true)
+      Accounts += (1, "Andrew Tvorozhkov", 0, hash("admin"), "admin", true)
     )
     db.run(create_table)
   }
@@ -82,11 +82,9 @@ object Setup {
 
   def add_good(name: String, price: Double): Unit = {
     val tmp = (this.get_last_good() + 1, name, price)
-    println(tmp)
 
     val insertActions = DBIO.seq(Goods += tmp)
 
-    println(Goods)
     db.run(insertActions)
   }
 
@@ -136,7 +134,7 @@ object Setup {
       if (mutable) {
         val buttonHtml: String =
           s"""
-             |<form method='post' action='https://goto.msk.ru/vault/admin/add_money'>
+             |<form method='post' action='admin/add_money'>
              |<input type='hidden' name='id' value='${i._1}'>
              |<input type='string' name='amount'>
              |<input value='Применить' type='submit'>
@@ -190,7 +188,7 @@ object Setup {
 
         val buttonHtml: String =
           s"""
-             |<form method='post' action='https://goto.msk.ru/vault/market/buy'>
+             |<form method='post' action='market/buy'>
              |<input type='hidden' name='id' value='${i._1}'>
              |<input type='hidden' name='price' value='${i._3}'>
              |<input  value='Купить' type='submit'>
@@ -210,9 +208,12 @@ object Setup {
   def try_login(email: String, password: String): Boolean = {
     val query = Accounts.filter(_.email === email).map(_.password).result
 
-    def res = Await.result(db.run(query), Duration.Inf)
+    def res: Seq[String] = Await.result(db.run(query), Duration.Inf)
 
-    password == res.head.toString
+    if (res.length > 0)
+      password == res.head.toString
+    else
+      false
   }
 
   def get_account_by_email(email: String): Account = {
