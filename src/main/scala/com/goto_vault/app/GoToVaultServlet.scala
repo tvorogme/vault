@@ -31,7 +31,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     if (user.head.admin) {
       Setup.all_accounts(mutable = true) +
         """
-          |<form action='admin/add_good' method='post'>
+          |<form action='https://goto.msk.ru/vault/admin/add_good' method='post'>
           |<input type='text' name='good_name'> <br> <br>
           |<input type='text' name='good_price'> <br> <br>
           |<input type='submit'>
@@ -51,7 +51,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
     if (user.head.admin) {
       Setup.add_good(params("good_name"), params("good_price").toInt)
-      redirect("admin")
+      redirect("https://goto.msk.ru/vault/admin")
     } else {
       halt(404, "Not Found")
     }
@@ -63,7 +63,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
     if (user.head.admin) {
       Setup.money_operation_with_db(params("id").toInt, params("amount").toInt)
-      redirect("admin")
+      redirect("https://goto.msk.ru/vault/admin")
     } else {
       halt(404, "Not Found")
     }
@@ -76,7 +76,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
   }
   post("/register") {
     Setup.add_account(params("name"), 15, params("password"), params("email"))
-    redirect("profile")
+    redirect("https://goto.msk.ru/vault/profile")
   }
 
   get("/market") {
@@ -85,7 +85,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     val user: Option[Account] = basicAuth()
 
     if (user.isEmpty) {
-      redirect("profile")
+      redirect("https://goto.msk.ru/vault/profile")
     }
     ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods())
   }
@@ -101,13 +101,13 @@ class GoToVaultServlet extends ZvezdochkaStack {
     val user: Option[Account] = basicAuth()
 
     if (user.isEmpty) {
-      redirect("profile")
+      redirect("https://goto.msk.ru/vault/profile")
     }
     if (user.get.balance < params("price").toDouble)
-      redirect("not_enough_money")
+      redirect("https://goto.msk.ru/vault/not_enough_money")
     else {
       Setup.buy_good(user.head.id, params("id").toInt)
-      redirect("thank_you")
+      redirect("https://goto.msk.ru/vault/thank_you")
     }
   }
 
