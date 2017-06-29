@@ -91,19 +91,9 @@ class GoToVaultServlet extends ZvezdochkaStack {
   }
   get("/thank_you") {
     <p>Спасибо за покупку</p>
-      <script>
-        setTimeout(5000,function()
-        {window.location = "profile"}
-        )
-      </script>
   }
   get("/not_enough_money") {
     <p>На Вашем счете недостаточно средств</p>
-      <script>
-        setTimeout(5000,function()
-        {window.location = "profile"}
-        )
-      </script>
   }
   post("/market/buy") {
     contentType = "text/html"
@@ -118,12 +108,6 @@ class GoToVaultServlet extends ZvezdochkaStack {
     else {
       Setup.buy_good(user.head.id, params("id").toInt)
       redirect("thank_you")
-    }
-    get("/thank_you") {
-      <p>Спасибо за покупку</p>
-    }
-    get("/not_enough_money") {
-      <p>На Вашем счете недостаточно средств</p>
     }
   }
 
