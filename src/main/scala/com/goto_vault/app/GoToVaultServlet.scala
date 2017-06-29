@@ -121,30 +121,24 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
   protected def basicAuth(try_login: Boolean = true): Option[Account] = {
     val req = new BasicAuthRequest(request)
+    var user: Option[Account] = None
 
     def notAuthenticated() {
       if (try_login) {
         response.setHeader("WWW-Authenticate", "Basic realm=\"%s\"" format "mc-nulty")
         halt(401, "Unauthenticated")
-      } else {
-        None
       }
     }
 
     if (!req.providesAuth) {
       notAuthenticated()
     }
-    if (!req.isBasicAuth) {
-      halt(400, "Bad Request")
-    }
-    var user: Option[Account] = None
 
     var login: Boolean = false
 
     if (req.username.length > 0 && req.password.length > 0) {
       login = Setup.try_login(req.username, Setup.hash(req.password))
     }
-
     if (login) {
       user = Option(Setup.get_account_by_email(req.username))
       response.setHeader("REMOTE_USER", "user.id")
@@ -152,7 +146,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     else {
       notAuthenticated()
     }
-
+    
     user
   }
 }
