@@ -3,9 +3,7 @@ package com.goto_vault.app
 import org.scalatra.auth.strategy.BasicAuthStrategy.BasicAuthRequest
 
 class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
-  Setup.primary_setup_account()
-  Setup.primary_setup_good()
-  Setup.primary_setup_transaction()
+  Setup.setup()
 
   protected def basicAuth(try_login: Boolean = true): Option[Account] = {
     val req = new BasicAuthRequest(request)
@@ -14,7 +12,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     def notAuthenticated() {
       if (try_login) {
         response.setHeader("WWW-Authenticate", "Basic realm=\"%s\"" format "mc-nulty")
-        halt(401, "Unauthenticated")
+        redirect("register")
       }
     }
 
@@ -30,7 +28,6 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     if (req.username.length > 0 && req.password.length > 0) {
       login = Setup.try_login(req.username, Setup.hash(req.password))
     }
-
     if (login) {
       user = Some(Setup.get_account_by_email(req.username))
       response.setHeader("REMOTE_USER", user.get.id.toString)
@@ -38,6 +35,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     else {
       notAuthenticated()
     }
+
     user
   }
 
@@ -50,9 +48,9 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     contentType = "text/html"
 
     val user: Option[Account] = basicAuth()
-    println(user)
+
     if (user.isEmpty)
-      redirect("/register")
+      redirect("register")
 
     ssp("/WEB-INF/templates/views/profile.ssp", "user" -> Setup.get_account(user.head.id))
   }
@@ -105,13 +103,13 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
   get("/register") {
     contentType = "text/html"
 
-    if (isAuthenticated)
+    if (scentry.isAuthenticated)
       redirect("profile")
 
     ssp("/WEB-INF/templates/views/register.ssp")
   }
   post("/register") {
-    Setup.add_account(params("name"), 15, params("password"), params("email"))
+    Setup.add_account(params("name"), 0, params("password"), params("email"))
     redirect("profile")
   }
 
@@ -120,9 +118,9 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
 
     val user: Option[Account] = basicAuth()
 
-    if (user.isEmpty) {
+    if (user.isEmpty)
       redirect("profile")
-    }
+
     ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods())
   }
 
@@ -142,8 +140,10 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     if (user.isEmpty) {
       redirect("profile")
     }
+
     if (user.get.balance < params("price").toDouble)
       redirect("not_enough_money")
+
     else {
       Setup.buy_good(user.head.id, params("id").toInt)
       redirect("thank_you")

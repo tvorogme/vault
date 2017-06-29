@@ -9,7 +9,7 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 class OurBasicAuthStrategy(protected override val app: ScalatraBase, realm: String) extends BasicAuthStrategy[Account](app, realm) {
 
   protected def validate(userName: String, password: String)(implicit request: HttpServletRequest, response: HttpServletResponse): Option[Account] = {
-    if (Setup.try_login(userName, password)) Some(Setup.get_account_by_email(userName))
+    if (Setup.try_login(userName, Setup.hash(password))) Some(Setup.get_account_by_email(userName))
     else None
   }
 

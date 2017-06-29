@@ -14,61 +14,28 @@ object Setup {
   val Transactions = TableQuery[TransactionTable]
   val Goods = TableQuery[GoodTable]
 
-
   def hash(text: String): String = java.security.MessageDigest.getInstance("MD5").digest(text.getBytes()).map(0xFF & _).map {
     "%02x".format(_)
   }.foldLeft("") {
     _ + _
   }
 
-
-  def primary_setup_account(): Unit = {
+  def setup(): Unit = {
     val create_table = DBIO.seq(
       Accounts.schema.create,
-      Accounts += (1, "Andrew Tvorozhkov", 0, hash("admin"), "admin", true)
+      Transactions.schema.create,
+      Goods.schema.create,
+
+      Accounts += (1, "Главный Банк", 0, this.hash("admin"), "admin", true)
     )
     db.run(create_table)
   }
 
-  def primary_setup_transaction(): Unit = {
-    val create_table = DBIO.seq(
-      Transactions.schema.create
-    )
-    db.run(create_table)
-  }
+  def get_last_account(): Int = Await.result(db.run(Accounts.length.result), Duration.Inf)
 
-  def primary_setup_good(): Unit = {
-    val create_table = DBIO.seq(
-      Goods.schema.create
-    )
-    db.run(create_table)
-  }
+  def get_last_transaction(): Int = Await.result(db.run(Transactions.length.result), Duration.Inf)
 
-
-  def get_last_account(): Int = {
-    val query = Accounts.length.result
-    println(query)
-
-    def res = Await.result(db.run(query), Duration.Inf)
-
-    res
-  }
-
-  def get_last_transaction(): Int = {
-    val query = Transactions.length.result
-
-    def res = Await.result(db.run(query), Duration.Inf)
-
-    res
-  }
-
-  def get_last_good(): Int = {
-    val query = Goods.length.result
-
-    def res = Await.result(db.run(query), Duration.Inf)
-
-    res
-  }
+  def get_last_good(): Int = Await.result(db.run(Goods.length.result), Duration.Inf)
 
   def add_account(name: String, balance: Double, pass: String, email: String, admin: Boolean = false): Unit = {
     val insertActions = DBIO.seq(Accounts += (this.get_last_account() + 1, name, balance, hash(pass), email, admin))
@@ -93,21 +60,15 @@ object Setup {
 
     def price: Double = Await.result(db.run(query.map(_.price).result), Duration.Inf).head
 
-    var query2 = Accounts.filter(_.id === acc_id).result
+    def balance = Await.result(db.run(Accounts.filter(_.id === acc_id).result), Duration.Inf).head._3
 
-    def balance = Await.result(db.run(query2), Duration.Inf).head._3
-
-    //ToDo to bank
     if (balance >= price) {
       money_operation(acc_id, 1, price)
       db.run(query.delete)
     }
   }
 
-  def update_good_prize(id: Int, price: Double): Unit = {
-    val query = Goods.filter(_.id === id).map(_.price).update(price)
-    db.run(query)
-  }
+  def update_good_prize(id: Int, price: Double): Unit = db.run(Goods.filter(_.id === id).map(_.price).update(price))
 
   def money_operation(from: Int, to: Int, amount: Double): Unit = {
     money_operation_with_db(from, -amount)
@@ -116,89 +77,69 @@ object Setup {
   }
 
   def money_operation_with_db(acc_id: Int, amount: Double): Unit = {
-    val query = Accounts.filter(_.id === acc_id).map(_.balance).result
+    val old_value_query = Accounts.filter(_.id === acc_id).map(_.balance).result
 
-    def res: Double = Await.result(db.run(query), Duration.Inf).head
+    def old_value: Double = Await.result(db.run(old_value_query), Duration.Inf).head
 
-    val q2 = Accounts.filter(_.id === acc_id).map(_.balance).update(res + amount)
+    val q2 = Accounts.filter(_.id === acc_id).map(_.balance).update(old_value + amount)
     db.run(q2)
   }
 
   def all_accounts(mutable: Boolean = false): String = {
-    var q = Accounts.sortBy(_.id).result
-
-    def res = Await.result(db.run(q), Duration.Inf)
-
+    var all_accounts = Await.result(db.run(Accounts.sortBy(_.id).result), Duration.Inf)
     var html: String = "<ul>"
-    for (i <- res) {
+    for (account <- all_accounts) {
       if (mutable) {
         val buttonHtml: String =
           s"""
              |<form method='post' action='admin/add_money'>
-             |<input type='hidden' name='id' value='${i._1}'>
+             |<input type='hidden' name='id' value='${account._1}'>
              |<input type='string' name='amount'>
              |<input value='Применить' type='submit'>
              |</form></li>""".stripMargin
-        html += "<li>id: " + i._1 + "  name: " + i._2 + "   balance: " + i._3 + buttonHtml
+        html += "<li>id: " + account._1 + "  name: " + account._2 + "   balance: " + account._3 + buttonHtml
       }
       else
-        html += "<li>id: " + i._1 + "  name: " + i._2 + "   balance: " + i._3 + "</li>"
+        html += "<li>id: " + account._1 + "  name: " + account._2 + "   balance: " + account._3 + "</li>"
     }
-    html += "</ul>"
-    html
+    html + "</ul>"
   }
 
-  def get_account(id: Int): (Int, String, Double, String, String, Boolean) = {
-    var q = Accounts.filter(_.id === id).result
-
-    def res: (Int, String, Double, String, String, Boolean) = Await.result(db.run(q), Duration.Inf).head
-
-    res
-  }
+  def get_account(id: Int): (Int, String, Double, String, String, Boolean) = Await.result(db.run(Accounts.filter(_.id === id).result), Duration.Inf).head
 
   def all_transactions(): String = {
-    var q = Transactions.sortBy(_.id).result
-
-    def res = Await.result(db.run(q), Duration.Inf)
+    val all_transactions = Await.result(db.run(Transactions.sortBy(_.id).result), Duration.Inf)
 
     var html: String = "<ul>"
-    for (i <- res) {
-      html += "<li>id: " + i._1 + "  from: " + i._2 + "   to: " + i._3 + " amount: " + i._4 + "</li>"
+    for (transaction <- all_transactions) {
+      html += "<li>id: " + transaction._1 + "  from: " + this.get_account_by_id(transaction._2) + "   to: " + this.get_account_by_id(transaction._3) + " amount: " + transaction._4 + "</li>"
     }
     html += "</ul>"
     html
   }
 
-  def all_cool_goods(): Seq[(Int, String, Double)] = {
-    val q = Goods.sortBy(_.id).result
-
-    def res = Await.result(db.run(q), Duration.Inf)
-
-    res
-  }
+  def all_cool_goods(): Seq[(Int, String, Double)] = Await.result(db.run(Goods.sortBy(_.id).result), Duration.Inf)
 
   def all_goods(buy: Boolean = false): String = {
-    val q = Goods.sortBy(_.id).result
-
-    def res = Await.result(db.run(q), Duration.Inf)
+    val all_goods = Await.result(db.run(Goods.sortBy(_.id).result), Duration.Inf)
 
     var html: String = "<ul>"
-    for (i <- res) {
+    for (good <- all_goods) {
       if (buy) {
 
         val buttonHtml: String =
           s"""
              |<form method='post' action='market/buy'>
-             |<input type='hidden' name='id' value='${i._1}'>
-             |<input type='hidden' name='price' value='${i._3}'>
+             |<input type='hidden' name='id' value='${good._1}'>
+             |<input type='hidden' name='price' value='${good._3}'>
              |<input  value='Купить' type='submit'>
              |</form></li>""".stripMargin
 
 
-        html += "<li> Name: " + i._2 + "   Price: " + i._3 + buttonHtml
+        html += "<li> Name: " + good._2 + "   Price: " + good._3 + buttonHtml
 
       } else {
-        html += "<li>id: " + i._1 + "  name: " + i._2 + "   price: " + i._3 + "</li>"
+        html += "<li>id: " + good._1 + "  name: " + good._2 + "   price: " + good._3 + "</li>"
       }
     }
     html += "</ul>"
@@ -210,8 +151,9 @@ object Setup {
 
     def res: Seq[String] = Await.result(db.run(query), Duration.Inf)
 
-    if (res.length > 0)
+    if (res.nonEmpty) {
       password == res.head.toString
+    }
     else
       false
   }
@@ -223,7 +165,6 @@ object Setup {
 
     Account(res._1, res._2, res._3, res._4, res._5, res._6)
   }
-
 
   def get_account_by_id(id: Int): Account = {
     val query = Accounts.filter(_.id === id).result
