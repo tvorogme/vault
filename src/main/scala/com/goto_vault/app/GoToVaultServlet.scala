@@ -20,7 +20,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     val user: Option[Account] = basicAuth()
 
     if (user.isEmpty)
-      redirect("https://goto.msk.ru/vault/admin/register")
+      redirect("admin/register")
 
     ssp("/WEB-INF/templates/views/profile.ssp", "user" -> Setup.get_account(user.head.id))
   }
@@ -31,7 +31,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
     if (user.head.admin) {
       Setup.all_accounts(mutable = true) +
         """
-          |<form action='https://goto.msk.ru/vault/admin/add_good' method='post'>
+          |<form action='admin/add_good' method='post'>
           |<input type='text' name='good_name'> <br> <br>
           |<input type='text' name='good_price'> <br> <br>
           |<input type='submit'>
@@ -51,7 +51,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
     if (user.head.admin) {
       Setup.add_good(params("good_name"), params("good_price").toInt)
-      redirect("https://goto.msk.ru/vault/admin")
+      redirect("admin")
     } else {
       halt(404, "Not Found")
     }
@@ -63,7 +63,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
 
     if (user.head.admin) {
       Setup.money_operation_with_db(params("id").toInt, params("amount").toInt)
-      redirect("https://goto.msk.ru/vault/admin")
+      redirect("admin")
     } else {
       halt(404, "Not Found")
     }
@@ -76,7 +76,7 @@ class GoToVaultServlet extends ZvezdochkaStack {
   }
   post("/register") {
     Setup.add_account(params("name"), 15, params("password"), params("email"))
-    redirect("https://goto.msk.ru/vault/profile")
+    redirect("profile")
   }
 
   get("/market") {
@@ -85,15 +85,25 @@ class GoToVaultServlet extends ZvezdochkaStack {
     val user: Option[Account] = basicAuth()
 
     if (user.isEmpty) {
-      redirect("https://goto.msk.ru/vault/profile")
+      redirect("profile")
     }
     ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods())
   }
   get("/thank_you") {
     <p>Спасибо за покупку</p>
+      <script>
+        setTimeout(5000,function()
+        {window.location = "profile"}
+        )
+      </script>
   }
   get("/not_enough_money") {
     <p>На Вашем счете недостаточно средств</p>
+      <script>
+        setTimeout(5000,function()
+        {window.location = "profile"}
+        )
+      </script>
   }
   post("/market/buy") {
     contentType = "text/html"
@@ -101,13 +111,13 @@ class GoToVaultServlet extends ZvezdochkaStack {
     val user: Option[Account] = basicAuth()
 
     if (user.isEmpty) {
-      redirect("https://goto.msk.ru/vault/profile")
+      redirect("profile")
     }
     if (user.get.balance < params("price").toDouble)
-      redirect("https://goto.msk.ru/vault/not_enough_money")
+      redirect("not_enough_money")
     else {
       Setup.buy_good(user.head.id, params("id").toInt)
-      redirect("https://goto.msk.ru/vault/thank_you")
+      redirect("thank_you")
     }
     get("/thank_you") {
       <p>Спасибо за покупку</p>

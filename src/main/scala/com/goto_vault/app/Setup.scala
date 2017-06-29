@@ -136,7 +136,7 @@ object Setup {
       if (mutable) {
         val buttonHtml: String =
           s"""
-             |<form method='post' action='https://goto.msk.ru/vault/admin/add_money'>
+             |<form method='post' action='admin/add_money'>
              |<input type='hidden' name='id' value='${i._1}'>
              |<input type='string' name='amount'>
              |<input value='Применить' type='submit'>
@@ -190,7 +190,7 @@ object Setup {
 
         val buttonHtml: String =
           s"""
-             |<form method='post' action='https://goto.msk.ru/vault/market/buy'>
+             |<form method='post' action='market/buy'>
              |<input type='hidden' name='id' value='${i._1}'>
              |<input type='hidden' name='price' value='${i._3}'>
              |<input  value='Купить' type='submit'>
