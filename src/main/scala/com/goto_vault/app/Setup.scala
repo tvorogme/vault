@@ -36,14 +36,13 @@ object Setup {
   def get_last_good(): Int = Await.result(db.run(Goods.length.result), Duration.Inf)
 
   def add_account(name: String, balance: Double, pass: String, email: String, admin: Boolean = false): Unit = {
-    var last_id: Int = this.get_last_account()
+    val last_id = this.get_last_account()
 
-    if (!last_id) {
-      last_id = 0
+    if (last_id == 0) {
       db.run(DBIO.seq(Accounts += (last_id + 1, name, balance, hash(pass), email, true)))
     }
     else {
-      db.run(DBIO.seq(Accounts += (last_id + 1, name, balance, hash(pass), email, true)))
+      db.run(DBIO.seq(Accounts += (last_id + 1, name, balance, hash(pass), email, admin)))
     }
   }
 
