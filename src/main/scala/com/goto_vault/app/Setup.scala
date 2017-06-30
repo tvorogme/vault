@@ -116,7 +116,7 @@ object Setup {
 
     var html: String = "<ul>"
     for (transaction <- all_transactions) {
-      html += "<li>id: " + transaction._1 + "  from: " + this.get_account_by_id(transaction._2) + "   to: " + this.get_account_by_id(transaction._3) + " amount: " + transaction._4 + "</li>"
+      html += "<li>id: " + transaction._1 + "  from: " + this.get_account_by_id(transaction._2).name + "   to: " + this.get_account_by_id(transaction._3).name + " amount: " + transaction._4 + "</li>"
     }
     html += "</ul>"
     html
