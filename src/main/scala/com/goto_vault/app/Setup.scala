@@ -90,7 +90,7 @@ object Setup {
   }
 
   def all_accounts(mutable: Boolean = false): String = {
-    var all_accounts = Await.result(db.run(Accounts.sortBy(_.id).result), Duration.Inf)
+    val all_accounts = Await.result(db.run(Accounts.sortBy(_.id).result), Duration.Inf)
     var html: String = "<ul>"
     for (account <- all_accounts) {
       if (mutable) {
