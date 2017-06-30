@@ -5,6 +5,9 @@
 *.swp
 *.out
 
+
+
+
 # rails specific
 *.sqlite3
 config/database.yml
@@ -70,3 +73,4 @@ jrebel.lic
 
 # db files
 ourdb.*
+ourdb.mv.db
