@@ -60,7 +60,8 @@ crossorigin="anonymous"></script>
         table{    width: 100vw;
         height: 100vh;}
         a{    font-size: 79px;
-        cursor: pointer;}
+        cursor: pointer;
+        color: #080808}
 
         p{
         text-align: center;
@@ -75,12 +76,17 @@ crossorigin="anonymous"></script>
         i:hover{
         cursor: pointer;
         }
+        a:hover{
+        text-decoration: none;
+        color: #4bb199;
+        }
     </style>
 </head>
 <body>
     <table>
         <tbody><tr><td valign="center">
-        <h1>VAULT MARKET</h1>
+        <h1>GoTo Market</h1>
+        <br>
         <ul>
             #for (i <- items)
                 <li><form id='product_${i._1}' method='post' action='${prefix}market/buy'>${i._2} ${i._3}ĜŦ  <input type='hidden' name='id' value='${i._1}'> <input type='hidden' name='price' value='${i._3}'> <i onclick="$('#product_${i._1}').submit()" class="fa fa-plus" aria-hidden="true"></i> </form></li>

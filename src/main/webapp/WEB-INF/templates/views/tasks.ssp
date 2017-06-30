@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%@ var user:  (Int, String, Double, String, String, Boolean) %>
 <%@ val prefix:  String %>
 <html lang="en">
 <head>
@@ -21,68 +20,79 @@
     integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 crossorigin="anonymous"></script>
 
+<link href="https://goto.msk.ru/templates/gk_university/images/favicon.ico" rel="shortcut icon"
+type="image/vnd.microsoft.icon"/>
 
 <!--Бутстрап-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 crossorigin="anonymous"></script>
 
-<link href="https://goto.msk.ru/templates/gk_university/images/favicon.ico" rel="shortcut icon"
-type="image/vnd.microsoft.icon"/>
-
 <meta charset="UTF-8">
-    <title>GoTo Vault Profile</title>
-    <style>
-        body, html{
-        font-family: "Ubuntu";
-        }
+<title>GoTo Vault tasks</title>
 
-        svg{
-        display: block;
-        margin: 0 auto;
-        height: 300px;
-        width: 500px;
-        }
+<style>
+    body, html{
+    font-family: "Ubuntu";
+    }
 
-        h1{
-        font-size: 120px;
-        text-align: center;
-        margin: 0;
-        letter-spacing: 13px;
-        color: #080808;
-        }
+    svg{
+    display: block;
+    margin: 0 auto;
+    height: 300px;
+    width: 500px;
+    }
 
-        p{
-        font-size: 90px;
-        }
-        table{    width: 100vw;
-        height: 100vh;}
-        a{    font-size: 79px;
-        cursor: pointer; color: #080808}
+    h1{
+    font-size: 120px;
+    text-align: center;
+    margin: 0;
+    letter-spacing: 13px;
+    color: #080808;
+    }
 
-        p{
-        text-align: center;
-        }
+    p{
+    font-size: 90px;
+    }
+    table{    width: 100vw;
+    height: 100vh;}
+    a{    font-size: 79px;
+    cursor: pointer;
+    color: #080808}
 
-        a:hover{
-        text-decoration: none;
-        color: #4bb199;
-        }
-    </style>
+    p{
+    text-align: center;
+    }
+
+    li{
+    font-size: 80px;
+    text-align: center;
+    list-style: none;
+    }
+
+    i:hover{
+    cursor: pointer;
+    }
+    a:hover{
+    text-decoration: none;
+    color: #4bb199;
+    }
+</style>
 </head>
 <body>
     <table>
         <tbody><tr><td valign="center">
-        <h1>GoToWallet</h1>
+        <h1>GoTo Tasks</h1>
         <br>
-        <p>VaultId: ${user._1}</p>
-        <p>GoToCoins: ${user._3}ĜŦ</p>
-        <br>
-        <p><a href="${prefix}market">market</a> / <a href="${prefix}tasks">tasks</a></p>
+            <ul>
+                <li>Собрать полный пакет документов 10ĜŦ</li>
+                <li>Сесть в автобус вовремя 5ĜŦ</li>
+                <li>Заселиться 1ĜŦ</li>
+            </ul>
+            <p><a href="${prefix}profile">wallet</a></p>
         </td></tr></tbody>
-
-    </table>
-</body>
+        </table>
+    </body>
 </html>

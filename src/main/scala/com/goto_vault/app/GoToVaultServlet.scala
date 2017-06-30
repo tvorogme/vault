@@ -137,6 +137,16 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods(), "prefix" -> Setup.prefix)
   }
 
+  get("/tasks") {
+    contentType = "text/html"
+
+    val user: Option[Account] = basicAuth()
+
+    if (user.isEmpty)
+      redirect(s"${Setup.prefix}profile")
+
+    ssp("/WEB-INF/templates/views/tasks.ssp", "prefix" -> Setup.prefix)
+  }
   get("/thank_you") {
     contentType = "text/html"
     "<h1>Спасибо за покупку</h1>" +
