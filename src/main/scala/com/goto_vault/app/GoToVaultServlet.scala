@@ -29,7 +29,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
       login = Setup.try_login(req.username, Setup.hash(req.password))
     }
     if (login) {
-      user = Some(Setup.get_account_by_email(req.username))
+      user = Setup.get_account_by_email(req.username)
       response.setHeader("REMOTE_USER", user.get.id.toString)
     }
     else {
@@ -109,8 +109,21 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     ssp("/WEB-INF/templates/views/register.ssp", "prefix" -> Setup.prefix)
   }
   post("/register") {
-    Setup.add_account(params("name"), 0, params("password"), params("email"))
-    redirect(s"${Setup.prefix}profile")
+
+    val name: String = params("name")
+    val password: String = params("password")
+    val email: String = params("email")
+
+    if (checker.username(email) && checker.password(password) && checker.full_name(name)) {
+      Setup.add_account(name, 0, password, email)
+      redirect(s"${Setup.prefix}profile")
+    }
+    else {
+      contentType = "text/html"
+      "<h1 style='text-align: center;'>Something go wrong. Use other username, etc.</h1>" +
+        "<h2 style='text-align: center;'>All values must be more than 5 symbols</h2> " +
+        s"<script>setTimeout(function(){window.location='${Setup.prefix}register'}, 5000)</script>"
+    }
   }
 
   get("/market") {
@@ -124,12 +137,15 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods(), "prefix" -> Setup.prefix)
   }
 
-  //FIXME add redirect
   get("/thank_you") {
-    <p>Спасибо за покупку</p>
+    contentType = "text/html"
+    "<h1>Спасибо за покупку</h1>" +
+      s"<script>setTimeout(function(){window.location='${Setup.prefix}profile'}, 5000)</script>"
   }
   get("/not_enough_money") {
-    <p>На Вашем счете недостаточно средств</p>
+    contentType = "text/html"
+    "<h1>На Вашем счете недостаточно средств</h1>" +
+      s"<script>setTimeout(function(){window.location='${Setup.prefix}profile'}, 5000)</script>"
   }
 
   post("/market/buy") {

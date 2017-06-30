@@ -13,7 +13,8 @@ object Setup {
   val Accounts = TableQuery[AccountTable]
   val Transactions = TableQuery[TransactionTable]
   val Goods = TableQuery[GoodTable]
-  val prefix: String = "https://goto.msk.ru/vault/"
+  val prefix: String = ""
+
   def hash(text: String): String = java.security.MessageDigest.getInstance("MD5").digest(text.getBytes()).map(0xFF & _).map {
     "%02x".format(_)
   }.foldLeft("") {
@@ -116,7 +117,14 @@ object Setup {
 
     var html: String = "<ul>"
     for (transaction <- all_transactions) {
-      html += "<li>id: " + transaction._1 + "  from: " + this.get_account_by_id(transaction._2).name + "   to: " + this.get_account_by_id(transaction._3).name + " amount: " + transaction._4 + "</li>"
+      val user1 = this.get_account_by_id(transaction._2)
+      val user2 = this.get_account_by_id(transaction._3)
+
+      if (user1.isEmpty || user2.isEmpty)
+        // Ignore
+        html += ""
+      else
+        html += "<li>id: " + transaction._1 + "  from: " + user1.get.name + "   to: " + user2.get.name + " amount: " + transaction._4 + "</li>"
     }
     html += "</ul>"
     html
@@ -162,19 +170,30 @@ object Setup {
       false
   }
 
-  def get_account_by_email(email: String): Account = {
+  def get_account_by_email(email: String): Option[Account] = {
     val query = Accounts.filter(_.email === email).result
 
-    def res: (Int, String, Double, String, String, Boolean) = Await.result(db.run(query), Duration.Inf).head
+    val result = Await.result(db.run(query), Duration.Inf)
 
-    Account(res._1, res._2, res._3, res._4, res._5, res._6)
+    if (result.isEmpty)
+      None
+    else {
+      def res: (Int, String, Double, String, String, Boolean) = result.head
+
+      Some(Account(res._1, res._2, res._3, res._4, res._5, res._6))
+    }
   }
 
-  def get_account_by_id(id: Int): Account = {
+  def get_account_by_id(id: Int): Option[Account] = {
     val query = Accounts.filter(_.id === id).result
 
-    def res: (Int, String, Double, String, String, Boolean) = Await.result(db.run(query), Duration.Inf).head
+    val result = Await.result(db.run(query), Duration.Inf)
 
-    Account(res._1, res._2, res._3, res._4, res._5, res._6)
+    if (result.isEmpty)
+      None
+    else {
+      def res: (Int, String, Double, String, String, Boolean) = result.head
+      Some(Account(res._1, res._2, res._3, res._4, res._5, res._6))
+    }
   }
 }
