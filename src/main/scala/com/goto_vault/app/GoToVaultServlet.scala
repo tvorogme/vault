@@ -12,7 +12,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     def notAuthenticated() {
       if (try_login) {
         response.setHeader("WWW-Authenticate", "Basic realm=\"%s\"" format "mc-nulty")
-        redirect("register")
+        redirect("https://goto.msk.ru/vault/register")
       }
     }
 
@@ -50,7 +50,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     val user: Option[Account] = basicAuth()
 
     if (user.isEmpty)
-      redirect("register")
+      redirect("https://goto.msk.ru/vault/register")
 
     ssp("/WEB-INF/templates/views/profile.ssp", "user" -> Setup.get_account(user.head.id))
   }
@@ -82,7 +82,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
 
     if (user.head.admin) {
       Setup.add_good(params("good_name"), params("good_price").toInt)
-      redirect("admin")
+      redirect("https://goto.msk.ru/vault/admin")
     } else {
       halt(404, "Not Found")
     }
@@ -94,7 +94,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
 
     if (user.head.admin) {
       Setup.money_operation_with_db(params("id").toInt, params("amount").toInt)
-      redirect("vault/admin")
+      redirect("https://goto.msk.ru/vault/vault/admin")
     } else {
       halt(404, "Not Found")
     }
@@ -104,13 +104,13 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     contentType = "text/html"
 
     if (scentry.isAuthenticated)
-      redirect("profile")
+      redirect("https://goto.msk.ru/vault/profile")
 
     ssp("/WEB-INF/templates/views/register.ssp")
   }
   post("/register") {
     Setup.add_account(params("name"), 0, params("password"), params("email"))
-    redirect("profile")
+    redirect("https://goto.msk.ru/vault/profile")
   }
 
   get("/market") {
@@ -119,7 +119,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     val user: Option[Account] = basicAuth()
 
     if (user.isEmpty)
-      redirect("profile")
+      redirect("https://goto.msk.ru/vault/profile")
 
     ssp("/WEB-INF/templates/views/market.ssp", "items" -> Setup.all_cool_goods())
   }
@@ -138,15 +138,15 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     val user: Option[Account] = basicAuth()
 
     if (user.isEmpty) {
-      redirect("profile")
+      redirect("https://goto.msk.ru/vault/profile")
     }
 
     if (user.get.balance < params("price").toDouble)
-      redirect("not_enough_money")
+      redirect("https://goto.msk.ru/vault/not_enough_money")
 
     else {
       Setup.buy_good(user.head.id, params("id").toInt)
-      redirect("thank_you")
+      redirect("https://goto.msk.ru/vault/thank_you")
     }
   }
 }
