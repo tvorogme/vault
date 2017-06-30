@@ -67,3 +67,6 @@ create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NU
 2017-06-30 02:25:43 jdbc[4]: exception
 org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
 create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
+2017-06-30 02:27:58 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "Accounts" already exists; SQL statement:
+create table "Accounts" ("ID" INTEGER NOT NULL PRIMARY KEY,"NAME" VARCHAR NOT NULL,"BALANCE" DOUBLE NOT NULL,"PASS" VARCHAR NOT NULL,"EMAIL" VARCHAR NOT NULL,"ADMIN" BOOLEAN NOT NULL) [42101-196]
