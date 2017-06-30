@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ var items:  Seq[(Int, String, Double)] %>
+<%@ val prefix:  String %>
 <html lang="en">
 <head>
 <!-- Большая не нужная библиотека -->
@@ -20,6 +21,8 @@
     integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 crossorigin="anonymous"></script>
 
+<link href="https://goto.msk.ru/templates/gk_university/images/favicon.ico" rel="shortcut icon"
+type="image/vnd.microsoft.icon"/>
 
 <!--Бутстрап-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -29,7 +32,7 @@ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh
 crossorigin="anonymous"></script>
 
 <meta charset="UTF-8">
-    <title>Title</title>
+    <title>GoTo Vault market</title>
 
     <style>
         body, html{
@@ -80,10 +83,10 @@ crossorigin="anonymous"></script>
         <h1>VAULT MARKET</h1>
         <ul>
             #for (i <- items)
-                <li><form id='product_${i._1}' method='post' action='https://goto.msk.ru/vault/market/buy'>${i._2} ${i._3}ĜŦ  <input type='hidden' name='id' value='${i._1}'> <input type='hidden' name='price' value='${i._3}'> <i onclick="$('#product_${i._1}').submit()" class="fa fa-plus" aria-hidden="true"></i> </form></li>
+                <li><form id='product_${i._1}' method='post' action='${prefix}market/buy'>${i._2} ${i._3}ĜŦ  <input type='hidden' name='id' value='${i._1}'> <input type='hidden' name='price' value='${i._3}'> <i onclick="$('#product_${i._1}').submit()" class="fa fa-plus" aria-hidden="true"></i> </form></li>
             #end
         </ul>
-        <p><a href="https://goto.msk.ru/vault/profile">wallet</a></p>
+        <p><a href="${prefix}profile">wallet</a></p>
         </td></tr></tbody>
 
     </table>

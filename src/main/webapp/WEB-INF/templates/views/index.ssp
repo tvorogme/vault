@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ val prefix:  String %>
 <html lang="en">
 <head>
 <!-- Большая не нужная библиотека -->
@@ -27,8 +28,11 @@ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh
 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 crossorigin="anonymous"></script>
 
+<link href="https://goto.msk.ru/templates/gk_university/images/favicon.ico" rel="shortcut icon"
+type="image/vnd.microsoft.icon"/>
+
 <meta charset="UTF-8">
-<title>Title</title>
+<title>GoTo Vault</title>
 
 <style>
     body, html{
@@ -518,7 +522,7 @@ transform="scale(1,-1)"/>
                 </svg>
                 <h1>VAULT</h1>
 
-                <p><a href="https://goto.msk.ru/vault/register">explore</a></p>
+                <p><a href="${prefix}register">explore</a></p>
             </td></tr></tbody>
 
         </table>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ val prefix:  String %>
 <html lang="en">
 <head>
 <!-- Большая не нужная библиотека -->
@@ -20,6 +21,9 @@
 crossorigin="anonymous"></script>
 
 
+<link href="https://goto.msk.ru/templates/gk_university/images/favicon.ico" rel="shortcut icon"
+type="image/vnd.microsoft.icon"/>
+
 <!--Бутстрап-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -28,7 +32,7 @@ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh
 crossorigin="anonymous"></script>
 
 <meta charset="UTF-8">
-    <title>Title</title>
+    <title>GoTo Vault Register</title>
 
     <style>
         body, html{

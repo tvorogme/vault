@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ var user:  (Int, String, Double, String, String, Boolean) %>
+<%@ val prefix:  String %>
 <html lang="en">
 <head>
 <!-- Большая не нужная библиотека -->
@@ -28,9 +29,11 @@ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 crossorigin="anonymous"></script>
 
-<meta charset="UTF-8">
-    <title>Title</title>
+<link href="https://goto.msk.ru/templates/gk_university/images/favicon.ico" rel="shortcut icon"
+type="image/vnd.microsoft.icon"/>
 
+<meta charset="UTF-8">
+    <title>GoTo Vault Profile</title>
     <style>
         body, html{
         font-family: "Ubuntu";
@@ -70,7 +73,7 @@ crossorigin="anonymous"></script>
         <h1>GoToWallet</h1>
         <p>VaultId: ${user._1}</p>
         <p>GoToCoins: ${user._3}ĜŦ</p>
-        <p><a href="https://goto.msk.ru/vault/market">market</a></p>
+        <p><a href="${prefix}market">market</a></p>
         </td></tr></tbody>
 
     </table>

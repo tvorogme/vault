@@ -13,7 +13,7 @@ object Setup {
   val Accounts = TableQuery[AccountTable]
   val Transactions = TableQuery[TransactionTable]
   val Goods = TableQuery[GoodTable]
-
+  val prefix: String = "https://goto.msk.ru/vault/"
   def hash(text: String): String = java.security.MessageDigest.getInstance("MD5").digest(text.getBytes()).map(0xFF & _).map {
     "%02x".format(_)
   }.foldLeft("") {
@@ -96,7 +96,7 @@ object Setup {
       if (mutable) {
         val buttonHtml: String =
           s"""
-             |<form method='post' action='https://goto.msk.ru/vault/admin/add_money'>
+             |<form method='post' action='${this.prefix}admin/add_money'>
              |<input type='hidden' name='id' value='${account._1}'>
              |<input type='string' name='amount'>
              |<input value='Применить' type='submit'>
@@ -133,7 +133,7 @@ object Setup {
 
         val buttonHtml: String =
           s"""
-             |<form method='post' action='https://goto.msk.ru/vault/market/buy'>
+             |<form method='post' action='${this.prefix}market/buy'>
              |<input type='hidden' name='id' value='${good._1}'>
              |<input type='hidden' name='price' value='${good._3}'>
              |<input  value='Купить' type='submit'>
