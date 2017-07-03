@@ -68,7 +68,7 @@ crossorigin="anonymous"></script>
         }
 
         li{
-        font-size: 80px;
+        font-size: 50px;
         text-align: center;
         list-style: none;
         }
@@ -89,7 +89,7 @@ crossorigin="anonymous"></script>
         <br>
         <ul>
             #for (i <- items)
-                <li><form id='product_${i._1}' method='post' action='${prefix}market/buy'>${i._2} ${i._3}ĜŦ  <input type='hidden' name='id' value='${i._1}'> <input type='hidden' name='price' value='${i._3}'> <i onclick="$('#product_${i._1}').submit()" class="fa fa-plus" aria-hidden="true"></i> </form></li>
+                <li><form id='product_${i._1}' method='post' action='${prefix}market/buy'>${i._2} ${i._3}ĜŦ  <input type='hidden' name='id' value='${i._1}'> <i onclick="$('#product_${i._1}').submit()" class="fa fa-plus" aria-hidden="true"></i> </form></li>
             #end
         </ul>
         <p><a href="${prefix}profile">wallet</a></p>

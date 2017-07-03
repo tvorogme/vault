@@ -13,7 +13,7 @@ object Setup {
   val Accounts = TableQuery[AccountTable]
   val Transactions = TableQuery[TransactionTable]
   val Goods = TableQuery[GoodTable]
-  val prefix: String = "https://goto.msk.ru/vault/"
+  val prefix: String = ""
 
   def hash(text: String): String = java.security.MessageDigest.getInstance("MD5").digest(text.getBytes()).map(0xFF & _).map {
     "%02x".format(_)
@@ -52,13 +52,7 @@ object Setup {
     db.run(insertActions)
   }
 
-  def add_good(name: String, price: Double): Unit = {
-    val tmp = (this.get_last_good() + 1, name, price)
-
-    val insertActions = DBIO.seq(Goods += tmp)
-
-    db.run(insertActions)
-  }
+  def add_good(name: String, price: Double): Unit = db.run(DBIO.seq(Goods += (this.get_last_good() + 1, name, price)))
 
   def buy_good(acc_id: Int, good_id: Int): Unit = {
     val query = Goods.filter(_.id === good_id)
@@ -71,6 +65,11 @@ object Setup {
       money_operation(acc_id, 1, price)
       db.run(query.delete)
     }
+  }
+
+  def get_good_price_by_id(good_id: Int): Double = {
+    val query = Goods.filter(_.id === good_id)
+    Await.result(db.run(query.map(_.price).result), Duration.Inf).head
   }
 
   def update_good_prize(id: Int, price: Double): Unit = db.run(Goods.filter(_.id === id).map(_.price).update(price))
@@ -121,7 +120,7 @@ object Setup {
       val user2 = this.get_account_by_id(transaction._3)
 
       if (user1.isEmpty || user2.isEmpty)
-        // Ignore
+      // Ignore
         html += ""
       else
         html += "<li>id: " + transaction._1 + "  from: " + user1.get.name + "   to: " + user2.get.name + " amount: " + transaction._4 + "</li>"
@@ -193,6 +192,7 @@ object Setup {
       None
     else {
       def res: (Int, String, Double, String, String, Boolean) = result.head
+
       Some(Account(res._1, res._2, res._3, res._4, res._5, res._6))
     }
   }

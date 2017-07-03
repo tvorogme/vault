@@ -167,7 +167,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
       redirect(s"${Setup.prefix}profile")
     }
 
-    if (user.get.balance < params("price").toDouble)
+    if (user.get.balance < Setup.get_good_price_by_id(params("id").toInt))
       redirect(s"${Setup.prefix}not_enough_money")
 
     else {
