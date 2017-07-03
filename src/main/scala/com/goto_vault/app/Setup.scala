@@ -26,7 +26,8 @@ object Setup {
     val create_table = DBIO.seq(
       Accounts.schema.create,
       Transactions.schema.create,
-      Goods.schema.create
+      Goods.schema.create,
+      BoughtGoods.schema.create
     )
     db.run(create_table)
   }
