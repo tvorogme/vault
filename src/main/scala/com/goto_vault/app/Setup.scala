@@ -13,7 +13,8 @@ object Setup {
   val Accounts = TableQuery[AccountTable]
   val Transactions = TableQuery[TransactionTable]
   val Goods = TableQuery[GoodTable]
-  val prefix: String = "https://goto.msk.ru/vault/"
+  val BoughtGoods = TableQuery[Bought_goodTable]
+  val prefix: String = ""
 
   def hash(text: String): String = java.security.MessageDigest.getInstance("MD5").digest(text.getBytes()).map(0xFF & _).map {
     "%02x".format(_)
@@ -30,11 +31,32 @@ object Setup {
     db.run(create_table)
   }
 
-  def get_last_account(): Int = Await.result(db.run(Accounts.length.result), Duration.Inf)
+  def get_last_account(): Int = {
+    val tmp_value: Seq[Int] = Await.result(db.run(Accounts.map(_.id).result), Duration.Inf)
 
-  def get_last_transaction(): Int = Await.result(db.run(Transactions.length.result), Duration.Inf)
+    if (tmp_value.isEmpty)
+      0
+    else
+      tmp_value.max
+  }
 
-  def get_last_good(): Int = Await.result(db.run(Goods.length.result), Duration.Inf)
+  def get_last_transaction(): Int = {
+    val tmp_value: Seq[Int] = Await.result(db.run(Transactions.map(_.id).result), Duration.Inf)
+
+    if (tmp_value.isEmpty)
+      0
+    else
+      tmp_value.max
+  }
+
+  def get_last_good(): Int = {
+    val tmp_value: Seq[Int] = Await.result(db.run(Goods.map(_.id).result), Duration.Inf)
+
+    if (tmp_value.isEmpty)
+      0
+    else
+      tmp_value.max
+  }
 
   def add_account(name: String, balance: Double, pass: String, email: String, admin: Boolean = false): Unit = {
     val last_id = this.get_last_account()
@@ -54,10 +76,12 @@ object Setup {
 
   def add_good(name: String, price: Double): Unit = db.run(DBIO.seq(Goods += (this.get_last_good() + 1, name, price)))
 
-  def buy_good(acc_id: Int, good_id: Int): Unit = {
+  def buy_good(acc_id: Int, good_id: Int): String = {
     val query = Goods.filter(_.id === good_id)
 
     def price: Double = Await.result(db.run(query.map(_.price).result), Duration.Inf).head
+    def name: String = Await.result(db.run(query.map(_.name).result), Duration.Inf).head
+
 
     def balance = Await.result(db.run(Accounts.filter(_.id === acc_id).result), Duration.Inf).head._3
 
@@ -65,6 +89,8 @@ object Setup {
       money_operation(acc_id, 1, price)
       db.run(query.delete)
     }
+
+    name
   }
 
   def get_good_price_by_id(good_id: Int): Double = {
@@ -195,5 +221,20 @@ object Setup {
 
       Some(Account(res._1, res._2, res._3, res._4, res._5, res._6))
     }
+  }
+
+  def add_bought_good(account_id: Int, good_name: String): Unit = db.run(DBIO.seq(BoughtGoods += (account_id, good_name)))
+
+  def get_all_bought_goods(): String = {
+    val all_bought_goods = Await.result(db.run(BoughtGoods.result), Duration.Inf)
+
+    var html: String = "<ul>"
+
+    for (good <- all_bought_goods) {
+      html += "<li>" + this.get_account_by_id(good._1).get.name + " купил " + good._2
+    }
+
+    html += "</ul>"
+    html
   }
 }

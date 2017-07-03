@@ -69,7 +69,8 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
            |</form>
            |""".stripMargin +
         Setup.all_goods() +
-        Setup.all_transactions()
+        Setup.all_transactions() +
+        Setup.get_all_bought_goods()
     } else {
       halt(404, "Not Found")
     }
@@ -171,7 +172,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
       redirect(s"${Setup.prefix}not_enough_money")
 
     else {
-      Setup.buy_good(user.head.id, params("id").toInt)
+      Setup.add_bought_good(user.head.id, Setup.buy_good(user.head.id, params("id").toInt))
       redirect(s"${Setup.prefix}thank_you")
     }
   }
