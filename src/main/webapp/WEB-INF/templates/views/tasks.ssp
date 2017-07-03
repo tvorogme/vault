@@ -67,7 +67,7 @@ crossorigin="anonymous"></script>
     }
 
     li{
-    font-size: 80px;
+    font-size: 50px;
     text-align: center;
     list-style: none;
     }
@@ -87,9 +87,13 @@ crossorigin="anonymous"></script>
         <h1>GoTo Tasks</h1>
         <br>
             <ul>
-                <li>Собрать полный пакет документов 10ĜŦ</li>
-                <li>Сесть в автобус вовремя 5ĜŦ</li>
-                <li>Заселиться 1ĜŦ</li>
+                <li>Проведение зарядки 300ĜŦ</li>
+                <li>Провести учебный мастер-класс 500ĜŦ</li>
+                <li>Провести творческий мас класс 500ĜŦ</li>
+                <li>Статья на хабр 500ĜŦ</li>
+                <li>Учёба 0-200ĜŦ</li>
+                <li>Выложить фото с хэштегом #gotocamp 20ĜŦ</li>
+                <li>Победа в квесте или соревновании 100ĜŦ</li>
             </ul>
             <p><a href="${prefix}profile">wallet</a></p>
         </td></tr></tbody>
