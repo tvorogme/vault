@@ -69,7 +69,6 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
            |</form>
            |""".stripMargin +
         Setup.all_goods() +
-        Setup.all_transactions() +
         Setup.get_all_bought_goods()
     } else {
       halt(404, "Not Found")
