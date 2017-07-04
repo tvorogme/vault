@@ -162,7 +162,7 @@ object Setup {
   def all_goods(buy: Boolean = false): String = {
     val all_goods = Await.result(db.run(Goods.sortBy(_.id).result), Duration.Inf)
 
-    var html: String = "<ul>"
+    var html: String = ""
     for (good <- all_goods) {
       if (buy) {
 
@@ -172,16 +172,15 @@ object Setup {
              |<input type='hidden' name='id' value='${good._1}'>
              |<input type='hidden' name='price' value='${good._3}'>
              |<input  value='Купить' type='submit'>
-             |</form></li>""".stripMargin
+             |</form></p>""".stripMargin
 
 
-        html += "<li> Name: " + good._2 + "   Price: " + good._3 + buttonHtml
+        html += "<p> Name: " + good._2 + "   Price: " + good._3 + buttonHtml
 
       } else {
-        html += "<li>id: " + good._1 + "  name: " + good._2 + "   price: " + good._3 + "</li>"
+        html += "<p>id: " + good._1 + "  name: " + good._2 + "   price: " + good._3 + "</p>"
       }
     }
-    html += "</ul>"
     html
   }
 
