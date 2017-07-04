@@ -62,6 +62,8 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     if (user.head.admin) {
       Setup.all_accounts(mutable = true) +
         s"""<style>li{    width: 370px;
+           |    font-size: 27px;
+           |    font-weight: bold;
            |    height: 200px;
            |    float: left;
            |    padding: 25px;

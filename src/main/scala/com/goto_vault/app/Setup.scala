@@ -129,10 +129,10 @@ object Setup {
              |<input type='string' name='amount'>
              |<input value='Применить' type='submit'>
              |</form></li>""".stripMargin
-        html += "<li>id: " + account._1 + "  name: " + account._2 + "   balance: " + account._3 + buttonHtml
+        html += "<li>id: " + account._1 + "<br>" + account._2 + "<br>" + account._3 + "ĜŦ" + buttonHtml
       }
       else
-        html += "<li>id: " + account._1 + "  name: " + account._2 + "   balance: " + account._3 + "</li>"
+        html += "<li>id: " + account._1 + "<br>" + account._2 + "<br>" + account._3 + "ĜŦ</li>"
     }
     html + "</ul>"
   }
