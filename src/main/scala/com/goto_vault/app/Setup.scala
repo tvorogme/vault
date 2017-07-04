@@ -14,7 +14,7 @@ object Setup {
   val Transactions = TableQuery[TransactionTable]
   val Goods = TableQuery[GoodTable]
   val BoughtGoods = TableQuery[Bought_goodTable]
-  val prefix: String = "https://goto.msk.ru/vault/"
+  val prefix: String = ""
 
   def hash(text: String): String = java.security.MessageDigest.getInstance("MD5").digest(text.getBytes()).map(0xFF & _).map {
     "%02x".format(_)

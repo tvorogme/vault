@@ -93,6 +93,20 @@ crossorigin="anonymous"></script>
         input[type='submit']:hover{
         color: #4bb199;
         }
+
+        a{
+        background: none;
+        border: none;
+        font-size: 50px;
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        color: #080808;
+        }
+
+        a:hover{
+        color: #4bb199;
+        }
     </style>
 </head>
 <body>
@@ -105,6 +119,7 @@ crossorigin="anonymous"></script>
             <input id="email" placeholder="Username" type='text' name='email'></input> <br></br>
             <input id="password" placeholder="Password" type='password' name='password'></input> <br></br>
             <input value="Создать" type='submit'></input>
+            <a href="${prefix}profile">Войти в профиль</a>
         </form>
         </td></tr></tbody>
 
