@@ -61,7 +61,7 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
 
     if (user.head.admin) {
       Setup.all_accounts(mutable = true) +
-        s"""<style>li{    width: 370px;
+        s"""<style>li{    width: 370px; height: 200px;
            |    float: left;}</style>
            |<form action='${Setup.prefix}admin/add_good' method='post'>
            |<input type='text' name='good_name'> <br> <br>
