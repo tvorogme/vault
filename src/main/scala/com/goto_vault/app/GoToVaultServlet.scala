@@ -166,14 +166,17 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
 
     if (user.isEmpty) {
       redirect(s"${Setup.prefix}profile")
-    }
+    } else {
+      if (user.get.balance < Setup.get_good_price_by_id(params("id").toInt))
+        redirect(s"${Setup.prefix}not_enough_money")
 
-    if (user.get.balance < Setup.get_good_price_by_id(params("id").toInt))
-      redirect(s"${Setup.prefix}not_enough_money")
+      else {
+        val good_name: String = Setup.buy_good(user.get.id, params("id").toInt)
 
-    else {
-      Setup.add_bought_good(user.head.id, Setup.buy_good(user.head.id, params("id").toInt))
-      redirect(s"${Setup.prefix}thank_you")
+        Setup.add_bought_good(user.get.id, good_name)
+
+        redirect(s"${Setup.prefix}thank_you")
+      }
     }
   }
 }

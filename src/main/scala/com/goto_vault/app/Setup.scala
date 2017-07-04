@@ -1,6 +1,7 @@
 package com.goto_vault.app
 
 import org.scalatra.{FutureSupport, ScalatraBase, ScalatraServlet}
+import slick.jdbc.H2Profile
 import slick.jdbc.H2Profile.api._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -9,11 +10,11 @@ import scala.concurrent.duration.Duration
 
 object Setup {
 
-  val db = Database.forConfig("h2mem1")
-  val Accounts = TableQuery[AccountTable]
-  val Transactions = TableQuery[TransactionTable]
-  val Goods = TableQuery[GoodTable]
-  val BoughtGoods = TableQuery[Bought_goodTable]
+  val db: H2Profile.backend.Database = Database.forConfig("h2mem1")
+  val Accounts: TableQuery[AccountTable] = TableQuery[AccountTable]
+  val Transactions: TableQuery[TransactionTable] = TableQuery[TransactionTable]
+  val Goods: TableQuery[GoodTable] = TableQuery[GoodTable]
+  val BoughtGoods: TableQuery[Bought_goodTable] = TableQuery[Bought_goodTable]
   val prefix: String = "https://goto.msk.ru/vault/"
 
   def hash(text: String): String = java.security.MessageDigest.getInstance("MD5").digest(text.getBytes()).map(0xFF & _).map {
@@ -81,8 +82,8 @@ object Setup {
     val query = Goods.filter(_.id === good_id)
 
     def price: Double = Await.result(db.run(query.map(_.price).result), Duration.Inf).head
-    def name: String = Await.result(db.run(query.map(_.name).result), Duration.Inf).head
 
+    val name: String = Await.result(db.run(query.map(_.name).result), Duration.Inf).head
 
     def balance = Await.result(db.run(Accounts.filter(_.id === acc_id).result), Duration.Inf).head._3
 
@@ -224,7 +225,9 @@ object Setup {
     }
   }
 
-  def add_bought_good(account_id: Int, good_name: String): Unit = db.run(DBIO.seq(BoughtGoods += (account_id, good_name)))
+  def add_bought_good(account_id: Int, good_name: String): Unit = {
+    db.run(DBIO.seq(BoughtGoods += (account_id, good_name)))
+  }
 
   def get_all_bought_goods(): String = {
     val all_bought_goods = Await.result(db.run(BoughtGoods.result), Duration.Inf)
