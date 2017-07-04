@@ -179,5 +179,26 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
       }
     }
   }
+
+  def toInt(s: String): Option[Int] = {
+    try {
+      Some(s.toInt)
+    } catch {
+      case e: Exception => None
+    }
+  }
+
+  get("/api/get_balance/:id") {
+    contentType = "text/html"
+
+    val intId: Option[Int] = toInt(params("id"))
+
+    val account: Option[Account] = Setup.get_account_by_id(intId.getOrElse(-1))
+
+    if (account.isDefined)
+      account.get.balance
+    else
+      halt(404, "Not found")
+  }
 }
 
