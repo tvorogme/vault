@@ -15,7 +15,7 @@ object Setup {
   val Transactions: TableQuery[TransactionTable] = TableQuery[TransactionTable]
   val Goods: TableQuery[GoodTable] = TableQuery[GoodTable]
   val BoughtGoods: TableQuery[Bought_goodTable] = TableQuery[Bought_goodTable]
-  val prefix: String = "https://goto.msk.ru/vault/"
+  val prefix: String = ""
 
   def hash(text: String): String = java.security.MessageDigest.getInstance("MD5").digest(text.getBytes()).map(0xFF & _).map {
     "%02x".format(_)
@@ -120,7 +120,7 @@ object Setup {
   def all_accounts(mutable: Boolean = false): String = {
     val all_accounts = Await.result(db.run(Accounts.sortBy(_.id).result), Duration.Inf)
     var html: String = "<ul>"
-    for (account <- all_accounts) {
+    for (account <- all_accounts.sortWith(_._2 < _._2)) {
       if (mutable) {
         val buttonHtml: String =
           s"""
