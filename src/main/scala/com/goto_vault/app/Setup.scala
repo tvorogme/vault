@@ -120,8 +120,10 @@ object Setup {
   def all_accounts(mutable: Boolean = false): String = {
     val all_accounts = Await.result(db.run(Accounts.sortBy(_.id).result), Duration.Inf)
     var html: String = "<ul>"
-    for (account <- all_accounts.sortWith(_._2 < _._2)) {
-      if (mutable) {
+
+
+    if (mutable) {
+      for (account <- all_accounts.sortWith(_._2 < _._2)) {
         val buttonHtml: String =
           s"""
              |<form method='post' action='${this.prefix}admin/add_money'>
@@ -129,11 +131,15 @@ object Setup {
              |<input type='string' name='amount'>
              |<input value='Применить' type='submit'>
              |</form></li>""".stripMargin
-        html += "<li>" + account._2 + "<br>" + account._3 + "ĜŦ" + buttonHtml
+        html += "<li>" + account._2 + "<br>" + account._3 + "ĜŦ"
       }
-      else
-        html += "<li>" + account._2 + "<br>" + account._3 + "ĜŦ</li>"
     }
+    else {
+      for (account <- all_accounts.sortWith(_._3 < _._3)) {
+        html += "<li>" + account._2 + "<br>" + account._3 + "ĜŦ</li>"
+      }
+    }
+
     html + "</ul>"
   }
 

@@ -82,6 +82,15 @@ class GoToVaultServlet extends ZvezdochkaStack with AuthenticationSupport {
     }
   }
 
+  get("/admin/stats"){
+    contentType = "text/html"
+    val user: Option[Account] = basicAuth()
+
+    if (user.head.admin) {
+      Setup.all_accounts()
+    }
+  }
+
   post("/admin/add_good") {
     contentType = "text/html"
 
