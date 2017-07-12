@@ -135,7 +135,7 @@ object Setup {
       }
     }
     else {
-      for (account <- all_accounts.sortWith(_._3 < _._3)) {
+      for (account <- all_accounts.sortWith(_._3 > _._3)) {
         html += "<li>" + account._2 + " " + account._3 + "ĜŦ</li>"
       }
     }
